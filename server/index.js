@@ -24,8 +24,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/tourism-p
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/packages', require('./routes/packages'));
@@ -42,5 +42,6 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
 });
 

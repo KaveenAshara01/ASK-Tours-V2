@@ -19,6 +19,8 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const [days, setDays] = useState([]);
+
   useEffect(() => {
     if (pkg) {
       setFormData({
@@ -27,6 +29,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
         price: pkg.price || '',
         featured: pkg.featured || false,
       });
+      setDays(pkg.days || []);
       setExistingImages(pkg.images || []);
       setExistingVideos(pkg.videos || []);
     }
@@ -38,6 +41,20 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  const handleDayChange = (index, field, value) => {
+    const newDays = [...days];
+    newDays[index] = { ...newDays[index], [field]: value };
+    setDays(newDays);
+  };
+
+  const addDay = () => {
+    setDays([...days, { dayNumber: days.length + 1, title: '', description: '' }]);
+  };
+
+  const removeDay = (index) => {
+    setDays(days.filter((_, i) => i !== index).map((day, i) => ({ ...day, dayNumber: i + 1 })));
   };
 
   const handleImagesChange = (e) => {
@@ -108,6 +125,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       data.append('description', formData.description);
       data.append('price', formData.price);
       data.append('featured', formData.featured);
+      data.append('days', JSON.stringify(days));
 
       // Append existing media arrays
       data.append('existingImages', JSON.stringify(existingImages));
@@ -203,7 +221,78 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* Itinerary Section */}
+        <div className="border-t border-gray-200 pt-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">Itinerary</h3>
+            <button
+              type="button"
+              onClick={addDay}
+              className="px-4 py-2 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 text-sm font-medium"
+            >
+              + Add Day
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            {days.map((day, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg p-4 relative border border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => removeDay(index)}
+                  className="absolute top-4 right-4 text-red-500 hover:text-red-700"
+                >
+                  Remove
+                </button>
+                <h4 className="font-medium text-gray-700 mb-4">Day {day.dayNumber}</h4>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Day Title
+                    </label>
+                    <input
+                      type="text"
+                      value={day.title}
+                      onChange={(e) => handleDayChange(index, 'title', e.target.value)}
+                      className="input-field"
+                      placeholder="e.g., Arrival & Welcome Dinner"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Day Description
+                    </label>
+                    <div className="bg-white">
+                      <ReactQuill
+                        theme="snow"
+                        value={day.description}
+                        onChange={(content) => handleDayChange(index, 'description', content)}
+                        className="h-40 mb-10"
+                        modules={{
+                          toolbar: [
+                            ['bold', 'italic', 'underline'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            ['clean']
+                          ],
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {days.length === 0 && (
+              <div className="text-center py-6 text-gray-500 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+                No itinerary days added yet. Click "Add Day" to create an itinerary.
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 border-t border-gray-200 pt-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Price (USD) *
@@ -237,7 +326,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
         </div>
 
         {/* Media Upload Section */}
-        <div className="space-y-4">
+        <div className="space-y-4 border-t border-gray-200 pt-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Images {!pkg && '*'}

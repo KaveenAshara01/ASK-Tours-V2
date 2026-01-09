@@ -97,6 +97,7 @@ router.post('/', auth, upload.fields([
 ]), async (req, res) => {
   try {
     const { title, description, price, featured } = req.body;
+    const days = req.body.days ? JSON.parse(req.body.days) : [];
 
     const imageFiles = req.files?.images || [];
     const videoFiles = req.files?.videos || [];
@@ -114,7 +115,8 @@ router.post('/', auth, upload.fields([
       price: parseFloat(price),
       images,
       videos,
-      featured: featured === 'true'
+      featured: featured === 'true',
+      days
     });
 
     await package.save();
@@ -139,6 +141,7 @@ router.put('/:id', auth, upload.fields([
 ]), async (req, res) => {
   try {
     const { title, description, price, featured, existingImages, existingVideos } = req.body;
+    const days = req.body.days ? JSON.parse(req.body.days) : [];
     const package = await Package.findById(req.params.id);
 
     if (!package) {
@@ -174,6 +177,7 @@ router.put('/:id', auth, upload.fields([
     package.description = description || package.description;
     package.price = price ? parseFloat(price) : package.price;
     package.featured = featured !== undefined ? featured === 'true' : package.featured;
+    package.days = days || package.days;
     package.images = images;
     package.videos = videos;
 

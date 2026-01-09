@@ -23,6 +23,11 @@ const packageSchema = new mongoose.Schema({
     type: [String],
     default: []
   },
+  days: [{
+    dayNumber: Number,
+    title: String,
+    description: String
+  }],
   featured: {
     type: Boolean,
     default: false

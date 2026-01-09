@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 async function createAdmin() {
   try {
+    console.log(process.env.MONGODB_URI);
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/tourism-packages');
     console.log('Connected to MongoDB');
 
@@ -17,7 +19,7 @@ async function createAdmin() {
     // Create default admin
     const admin = new Admin({
       username: 'admin',
-      password: 'admin123'
+      password: '12345'
     });
 
     await admin.save();
