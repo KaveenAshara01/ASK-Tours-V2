@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PackageCard from '../components/PackageCard';
@@ -14,31 +14,6 @@ function Home() {
   useEffect(() => {
     fetchPackages();
   }, []);
-
-  const scrollContainerRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
-
-    let animationFrameId;
-
-    const scroll = () => {
-      if (!isPaused) {
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-          scrollContainer.scrollLeft = 0;
-        } else {
-          scrollContainer.scrollLeft += 1.5;
-        }
-      }
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [packages, isPaused]);
 
   const fetchPackages = async () => {
     try {
@@ -88,16 +63,10 @@ function Home() {
                   ))}
               </div>
 
-              {/* Mobile Marquee */}
-              {/* Mobile Marquee / Swipeable Auto-Scroll */}
+              {/* Mobile Swipeable List */}
               <div className="md:hidden relative mb-12 -mx-4 group">
                 <div
-                  ref={scrollContainerRef}
-                  className="flex overflow-x-auto gap-8 px-4 scrollbar-hide"
-                  onTouchStart={() => setIsPaused(true)}
-                  onTouchEnd={() => setIsPaused(false)}
-                  onMouseEnter={() => setIsPaused(true)}
-                  onMouseLeave={() => setIsPaused(false)}
+                  className="flex overflow-x-auto gap-8 px-4 scrollbar-hide snap-x snap-mandatory"
                 >
                   {(() => {
                     const sortedPackages = packages
@@ -105,9 +74,8 @@ function Home() {
                       .concat(packages.filter(pkg => !pkg.featured))
                       .slice(0, 6);
 
-                    // Duplicate the sorted list for seamless scrolling
-                    return [...sortedPackages, ...sortedPackages].map((pkg, i) => (
-                      <div key={`${pkg._id}-${i}`} className="min-w-[300px] flex-shrink-0 whitespace-normal">
+                    return sortedPackages.map((pkg, i) => (
+                      <div key={`${pkg._id}-${i}`} className="min-w-[300px] flex-shrink-0 whitespace-normal snap-center">
                         <PackageCard package={pkg} />
                       </div>
                     ));

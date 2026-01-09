@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5000' }) {
+function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5000', onImageClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -11,6 +11,10 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
   ];
 
   const minSwipeDistance = 50;
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [images.length, videos.length]);
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -23,7 +27,7 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -36,25 +40,29 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
     }
   };
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => 
+  const goToPrevious = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? allMedia.length - 1 : prevIndex - 1
     );
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => 
+  const goToNext = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
       prevIndex === allMedia.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index, e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setCurrentIndex(index);
   };
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [images.length, videos.length]);
 
   if (allMedia.length === 0) {
     return (
@@ -65,19 +73,19 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
   }
 
   return (
-    <div 
+    <div
       className="relative w-full h-full overflow-hidden bg-gray-200"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
       {/* Media Display */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full" onClick={onImageClick ? (e) => onImageClick(e) : undefined}>
         {allMedia[currentIndex].type === 'image' ? (
           <img
             src={`${baseUrl}${allMedia[currentIndex].url}`}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover cursor-pointer"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/400x300?text=Image+Error';
             }}
@@ -85,9 +93,10 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
         ) : (
           <video
             src={`${baseUrl}${allMedia[currentIndex].url}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover cursor-pointer"
             controls
             playsInline
+            onClick={(e) => e.stopPropagation()} // Video controls shouldn't trigger navigation usually, but let's be safe or let native controls handle it.
           />
         )}
       </div>
@@ -122,12 +131,11 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
           {allMedia.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-white w-6' 
+              onClick={(e) => goToSlide(index, e)}
+              className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
+                  ? 'bg-white w-6'
                   : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

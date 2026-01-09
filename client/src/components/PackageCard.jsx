@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MediaCarousel from './MediaCarousel';
 
 function PackageCard({ package: pkg }) {
+  const navigate = useNavigate();
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -20,18 +22,19 @@ function PackageCard({ package: pkg }) {
 
   return (
     <div className="card group flex flex-col h-full">
-      <Link to={`/package/${pkg._id}`} className="block relative h-64 overflow-hidden bg-gray-200 cursor-pointer">
+      <div className="relative h-64 overflow-hidden bg-gray-200">
         <MediaCarousel
           images={images}
           videos={videos}
           baseUrl="http://localhost:5000"
+          onImageClick={() => navigate(`/package/${pkg._id}`)}
         />
         {pkg.featured && (
           <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold z-20">
             Featured
           </div>
         )}
-      </Link>
+      </div>
       <div className="p-6 flex flex-col flex-grow">
         <Link to={`/package/${pkg._id}`}>
           <h3 className="text-2xl font-bold text-gray-900 mb-2 hover:text-primary-600 transition-colors">{pkg.title}</h3>
