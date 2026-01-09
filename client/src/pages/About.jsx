@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
@@ -6,6 +7,11 @@ import ContactSection from '../components/ContactSection';
 function About() {
     return (
         <div className="min-h-screen bg-gray-50">
+            <SEO
+                title="About Us"
+                description="Learn more about Ameliya Elephant Safari. Our mission is to provide ethical and unforgettable wildlife experiences in Sri Lanka."
+                keywords="about us, safari company, ethical tourism, sri lanka travel guide"
+            />
             <Header />
 
             {/* Hero Section */}

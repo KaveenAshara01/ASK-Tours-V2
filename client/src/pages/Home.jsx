@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -28,6 +29,11 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
+      <SEO
+        title="Home"
+        description="Experience the best elephant safari tours in Sri Lanka with Ameliya Elephant Safari. Book your unforgettable adventure today."
+        keywords="elephant safari, sri lanka tours, wildlife tours, minneriya safari, yala safari"
+      />
       <Header />
       <Hero />
 

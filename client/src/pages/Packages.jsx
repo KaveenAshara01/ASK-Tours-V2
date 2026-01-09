@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import SEO from '../components/SEO';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PackageCard from '../components/PackageCard';
@@ -28,6 +29,11 @@ function Packages() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+            <SEO
+                title="Our Packages"
+                description="Explore our exclusive elephant safari packages. Choose from a variety of tours designed to give you the best wildlife experience in Sri Lanka."
+                keywords="safari packages, tour packages, sri lanka wildlife, safari booking"
+            />
             <Header />
 
             {/* Hero Section */}

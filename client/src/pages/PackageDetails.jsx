@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SEO from '../components/SEO';
 import MediaCarousel from '../components/MediaCarousel';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css'; // Use bubble theme for read-only view
@@ -72,6 +73,11 @@ function PackageDetails() {
 
     return (
         <div className="min-h-screen bg-white flex flex-col">
+            <SEO
+                title={pkg.title}
+                description={`Book your ${pkg.title} tour today! Price: ${formattedPrice}. An unforgettable wildlife adventure awaiting you.`}
+                image={images[0]}
+            />
             <Header />
 
             <div className="flex-grow pb-20">
