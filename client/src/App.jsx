@@ -6,9 +6,12 @@ import PackageDetails from './pages/PackageDetails';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
+import FloatingWhatsApp from './components/FloatingWhatsApp';
+
 function App() {
   return (
     <Router>
+      <FloatingWhatsApp />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

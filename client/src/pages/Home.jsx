@@ -31,13 +31,13 @@ function Home() {
       <Header />
       <Hero />
 
-      <section id="packages" className="py-20 px-4">
+      <section id="packages" className="py-12 md:py-20 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
               Popular Packages
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Hand-picked experiences for your perfect holiday
             </p>
           </div>
@@ -64,18 +64,18 @@ function Home() {
               </div>
 
               {/* Mobile Swipeable List */}
-              <div className="md:hidden relative mb-12 -mx-4 group">
+              <div className="md:hidden relative mb-8 -mx-4 group">
                 <div
-                  className="flex overflow-x-auto gap-8 px-4 scrollbar-hide snap-x snap-mandatory"
+                  className="flex overflow-x-auto gap-4 px-4 pb-8 scrollbar-hide snap-x snap-mandatory"
                 >
                   {(() => {
                     const sortedPackages = packages
-                      .filter(pkg => pkg.featured)
-                      .concat(packages.filter(pkg => !pkg.featured))
+                      .filter(pkg => pkg.featured) // Prioritize featured
+                      .concat(packages.filter(pkg => !pkg.featured)) // Then others
                       .slice(0, 6);
 
                     return sortedPackages.map((pkg, i) => (
-                      <div key={`${pkg._id}-${i}`} className="min-w-[300px] flex-shrink-0 whitespace-normal snap-center">
+                      <div key={`${pkg._id}-${i}`} className="min-w-[85vw] sm:min-w-[350px] flex-shrink-0 whitespace-normal snap-center">
                         <PackageCard package={pkg} />
                       </div>
                     ));

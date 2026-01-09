@@ -76,7 +76,7 @@ function PackageDetails() {
 
             <div className="flex-grow pb-20">
                 {/* Hero Section / Media Carousel */}
-                <div className="relative h-[60vh] md:h-[70vh] bg-black">
+                <div className="relative h-[50vh] md:h-[70vh] bg-black">
                     <MediaCarousel
                         images={images}
                         videos={videos}
@@ -85,31 +85,31 @@ function PackageDetails() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
 
-                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white max-w-7xl mx-auto">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16 text-white max-w-7xl mx-auto">
                         {pkg.featured && (
-                            <span className="bg-yellow-500 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-4 inline-block">
+                            <span className="bg-yellow-500 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3 md:mb-4 inline-block">
                                 Featured Experience
                             </span>
                         )}
-                        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight shadow-sm">
+                        <h1 className="text-3xl md:text-6xl font-extrabold mb-2 md:mb-4 leading-tight shadow-sm">
                             {pkg.title}
                         </h1>
-                        <div className="flex items-center gap-6">
-                            <span className="text-3xl font-bold text-primary-400">
+                        <div className="flex flex-wrap items-center gap-3 md:gap-6">
+                            <span className="text-2xl md:text-3xl font-bold text-primary-400">
                                 {formattedPrice}
                             </span>
-                            <span className="text-gray-300 text-lg">
+                            <span className="text-gray-300 text-sm md:text-lg">
                                 / per person
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 md:-mt-10 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
 
                         {/* Main Content */}
-                        <div className="lg:col-span-2 space-y-12">
+                        <div className="lg:col-span-2 space-y-8 md:space-y-12">
 
                             {/* Overview Card */}
                             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">

@@ -46,7 +46,7 @@ function Packages() {
             </div>
 
             {/* Packages Grid */}
-            <section className="py-20 px-4">
+            <section className="py-12 md:py-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     {loading ? (
                         <div className="text-center py-20">
@@ -57,7 +57,7 @@ function Packages() {
                             <p className="text-gray-600 text-xl">No packages available at the moment.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                             {packages.map((pkg, index) => (
                                 <div
                                     key={pkg._id}
