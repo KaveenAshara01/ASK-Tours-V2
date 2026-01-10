@@ -31,7 +31,7 @@ function Header() {
                 className="h-10 md:h-14 w-auto object-contain rounded-md shadow-sm"
               />
               <span className={`text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-700 to-cyan-700 bg-clip-text text-transparent ${isMenuOpen ? 'opacity-0 md:opacity-100' : 'opacity-100'} transition-opacity`}>
-                Ameliya Safari
+                ASK Tours
               </span>
             </Link>
 

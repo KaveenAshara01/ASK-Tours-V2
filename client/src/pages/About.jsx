@@ -9,8 +9,8 @@ function About() {
         <div className="min-h-screen bg-gray-50">
             <SEO
                 title="About Us"
-                description="Learn more about Ameliya Elephant Safari. Our mission is to provide ethical and unforgettable wildlife experiences in Sri Lanka."
-                keywords="about us, safari company, ethical tourism, sri lanka travel guide"
+                description="Learn more about ASK Tours. We are a premier travel agency in Sri Lanka, offering tailor-made tours, wildlife safaris, and cultural experiences."
+                keywords="about ask tours, travel agency sri lanka, tour operator, sri lanka holidays, wildlife safaris"
             />
             <Header />
 
@@ -22,9 +22,9 @@ function About() {
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60"></div>
                 <div className="relative z-10 text-center px-4 animate-fade-in-up">
-                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">About Us</h1>
+                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">About ASK Tours</h1>
                     <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                        Crafting unforgettable journeys through the heart of Sri Lanka
+                        Your gateway to the wonders of Sri Lanka
                     </p>
                 </div>
             </div>
@@ -38,14 +38,13 @@ function About() {
                     </div>
                     <div className="prose prose-lg mx-auto text-gray-600">
                         <p className="mb-6 text-lg leading-relaxed text-center">
-                            Founded with a deep respect for Sri Lanka's majestic wildlife,
-                            Ameliya Elephant Safari Service was born from a desire to connect travelers with the untamed beauty of our island.
-                            We specialize in ethical wildlife encounters that honor nature while creating breathtaking memories.
+                            Founded with a passion for sharing the beauty of our island,
+                            ASK Tours has grown into a full-service travel agency dedicated to creating unforgettable Sri Lankan experiences.
+                            We specialize in everything from thrill-seeking wildlife safaris to serene cultural immersions.
                         </p>
                         <p className="text-lg leading-relaxed text-center">
-                            From the legendary elephant gatherings of Minneriya to the leopard-rich zones of Yala,
-                            our expert naturalists guide you through the island's most spectacular ecosystems.
-                            We are committed to conservation and providing you with an immersive, respectful, and thrilling safari experience.
+                            Whether you're looking to explore the ancient cities, relax on pristine beaches, or witness the majestic elephants of Minneriya,
+                            our expert team is here to craft the perfect itinerary for you. We are committed to sustainable tourism and exceptional service.
                         </p>
                     </div>
                 </div>

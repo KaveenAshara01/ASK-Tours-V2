@@ -12,13 +12,13 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto text-center z-10 px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-0">
         <span className="block text-primary-300 font-bold tracking-widest uppercase mb-4 text-sm md:text-base animate-fade-in">
-          Explore the Wild
+          Your Journey Begins Here
         </span>
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in drop-shadow-xl leading-tight">
-          Heart of <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">Sri Lanka</span>
+          Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">Sri Lanka</span>
         </h1>
         <p className="text-lg md:text-2xl mb-10 text-white/90 max-w-3xl mx-auto animate-fade-in-up leading-relaxed" style={{ animationDelay: '0.2s' }}>
-          Embark on an unforgettable adventure through ancient landscapes and national parks with our expert guides.
+          Experience the ultimate island getaway with ASK Tours. From pristine beaches and ancient cities to thrilling wildlife safaris, we craft the perfect holiday for you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up w-full max-w-md mx-auto sm:max-w-none" style={{ animationDelay: '0.4s' }}>
           <a

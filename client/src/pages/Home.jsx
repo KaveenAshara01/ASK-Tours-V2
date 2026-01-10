@@ -31,8 +31,8 @@ function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       <SEO
         title="Home"
-        description="Experience the best elephant safari tours in Sri Lanka with Ameliya Elephant Safari. Book your unforgettable adventure today."
-        keywords="elephant safari, sri lanka tours, wildlife tours, minneriya safari, yala safari"
+        description="Welcome to ASK Tours, your premier travel agency in Sri Lanka. Explore our wide range of tour packages, from wildlife safaris to cultural tours."
+        keywords="sri lanka travel agency, tour packages, wildlife safari, cultural tours, ask tours, holidays in sri lanka"
       />
       <Header />
       <Hero />

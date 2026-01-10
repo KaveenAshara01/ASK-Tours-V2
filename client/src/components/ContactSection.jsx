@@ -1,6 +1,6 @@
 function ContactSection() {
   const whatsappNumber = "1234567890"; // Replace with actual WhatsApp number
-  const email = "contact@travelvista.com"; // Replace with actual email
+  const email = "info@asktours.com"; // Replace with actual email
 
   return (
     <section id="contact" className="py-12 md:py-20 px-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">

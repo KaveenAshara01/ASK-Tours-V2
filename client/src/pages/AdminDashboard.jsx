@@ -74,11 +74,11 @@ function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Ameliya Safari Admin</h1>
-            <div className="flex gap-4">
+      <header className="bg-white shadow">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justifyContent-between items-center">
+          <div className="flex justify-between items-center w-full">
+            <h1 className="text-3xl font-bold text-gray-900">ASK Tours Dashboard</h1>
+            <div className="flex gap-4 items-center">
               <a
                 href="/"
                 target="_blank"
@@ -88,7 +88,7 @@ function AdminDashboard() {
               </a>
               <button
                 onClick={handleLogout}
-                className="text-red-600 hover:text-red-700 font-semibold"
+                className="text-red-600 hover:text-red-700 font-semibold bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg transition-colors"
               >
                 Logout
               </button>
@@ -129,7 +129,7 @@ function AdminDashboard() {
           />
         )}
       </main>
-    </div>
+    </div >
   );
 }
 

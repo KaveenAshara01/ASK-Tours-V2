@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
 export default function SEO({ title, description, keywords, image, url }) {
-    const siteTitle = "Ameliya Elephant Safari";
+    const siteTitle = "ASK Tours";
     const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-    const finalDescription = description || "Experience the best elephant safari tours in Sri Lanka. Book your unforgettable adventure with Ameliya Elephant Safari.";
+    const finalDescription = description || "Discover Sri Lanka with ASK Tours. Your premier travel agency for unforgettable safaris, cultural journeys, and island adventures.";
     const finalImage = image || "/images/ameliyalogo.jpg";
     const finalUrl = url || window.location.href;
 
