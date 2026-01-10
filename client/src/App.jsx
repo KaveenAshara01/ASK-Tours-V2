@@ -8,11 +8,13 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <HelmetProvider>
       <Router>
+        <ScrollToTop />
         <FloatingWhatsApp />
         <Routes>
           <Route path="/" element={<Home />} />

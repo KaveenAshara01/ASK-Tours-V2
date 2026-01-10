@@ -194,7 +194,7 @@ function PackageDetails() {
                                 <div className="bg-primary-50 rounded-2xl p-6 border border-primary-100">
                                     <h4 className="font-bold text-primary-900 mb-3">Why Choose Us?</h4>
                                     <ul className="space-y-2 text-primary-800 text-sm">
-                                        <li className="flex items-center gap-2">✓ Certified Guides</li>
+                                        <li className="flex items-center gap-2">✓ Multilingual Guides (EN/RU)</li>
                                         <li className="flex items-center gap-2">✓ Premium Transport</li>
                                         <li className="flex items-center gap-2">✓ 24/7 Support</li>
                                         <li className="flex items-center gap-2">✓ Best Price Guarantee</li>

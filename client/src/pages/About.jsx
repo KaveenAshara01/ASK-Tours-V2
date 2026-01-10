@@ -80,9 +80,9 @@ function About() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Expert Guides</h3>
+                            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Expert Multilingual Guides</h3>
                             <p className="text-gray-600 text-center">
-                                Our certified guides are passionate locals who know every hidden gem and story of this beautiful island.
+                                Our certified guides speak fluent English and Russian, ensuring you understand every story and fact about our beautiful island.
                             </p>
                         </div>
 
