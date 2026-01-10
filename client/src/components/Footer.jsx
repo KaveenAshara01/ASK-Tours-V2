@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
 function Footer() {
   return (
@@ -7,9 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand & Description */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-cyan-400 bg-clip-text text-transparent">
-              ASK Tours
-            </h3>
+            <Logo className="h-12 w-auto" color="white" />
             <p className="text-gray-400 leading-relaxed">
               Your trusted travel partner in Sri Lanka. We craft personalized journeys, from thrilling safaris to serene beach escapes.
             </p>

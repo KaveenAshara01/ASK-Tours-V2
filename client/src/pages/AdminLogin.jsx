@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Logo from '../components/Logo';
 
 function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -30,10 +31,7 @@ function AdminLogin() {
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-2xl">A</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">ASK Tours</h2>
+            <Logo className="h-16 w-auto mx-auto mb-6" color="#0e3a6c" />
             <p className="text-gray-600 mt-2">Admin Dashboard Login</p>
           </div>
 

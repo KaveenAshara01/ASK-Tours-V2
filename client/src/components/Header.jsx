@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Prevent scrolling when menu is open
   if (typeof document !== 'undefined') {
@@ -19,30 +29,34 @@ function Header() {
     { name: 'Contact', path: '#contact', type: 'anchor' },
   ];
 
+  // Determine header and text colors based on state
+  // If Scrolled OR Menu Open (on mobile) -> White bg, Dark Text/Logo
+  // If Top AND Menu Closed -> Transparent bg, White Text/Logo
+  const isDarkState = isScrolled || isMenuOpen;
+
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isMenuOpen ? 'bg-transparent' : 'bg-white/80 backdrop-blur-md shadow-sm'}`}>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isDarkState ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+          }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link to="/" className="flex items-center gap-3 z-50" onClick={() => setIsMenuOpen(false)}>
-              <img
-                src="/images/ameliyalogo.jpg"
-                alt="Ameliya Elephant Safari Service"
-                className="h-10 md:h-14 w-auto object-contain rounded-md shadow-sm"
+          <div className="flex justify-between items-center transition-all duration-300">
+            <Link to="/" className="flex items-center z-50" onClick={() => setIsMenuOpen(false)}>
+              <Logo
+                className="h-10 md:h-14 w-auto transition-all duration-300"
+                color={isDarkState ? '#0e3a6c' : 'white'}
               />
-              <span className={`text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary-700 to-cyan-700 bg-clip-text text-transparent ${isMenuOpen ? 'opacity-0 md:opacity-100' : 'opacity-100'} transition-opacity`}>
-                ASK Tours
-              </span>
             </Link>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-gray-800 focus:outline-none z-50 bg-white/50 rounded-full backdrop-blur-sm"
+              className="md:hidden p-2 focus:outline-none z-50 rounded-full transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
               <svg
-                className="w-8 h-8"
+                className={`w-8 h-8 ${isDarkState ? 'text-gray-900' : 'text-white'}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -59,11 +73,19 @@ function Header() {
             <nav className="hidden md:flex space-x-8">
               {navLinks.map((link, index) => (
                 link.type === 'link' ? (
-                  <Link key={index} to={link.path} className="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+                  <Link
+                    key={index}
+                    to={link.path}
+                    className={`font-medium transition-colors hover:text-primary-500 ${isDarkState ? 'text-gray-700' : 'text-white/90 hover:text-white'}`}
+                  >
                     {link.name}
                   </Link>
                 ) : (
-                  <a key={index} href={link.path} className="text-gray-700 hover:text-primary-600 font-medium transition-colors">
+                  <a
+                    key={index}
+                    href={link.path}
+                    className={`font-medium transition-colors hover:text-primary-500 ${isDarkState ? 'text-gray-700' : 'text-white/90 hover:text-white'}`}
+                  >
                     {link.name}
                   </a>
                 )
