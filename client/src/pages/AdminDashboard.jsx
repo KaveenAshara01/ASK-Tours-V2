@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PackageForm from '../components/PackageForm';
 import PackageList from '../components/PackageList';
+import CategoryManager from '../components/CategoryManager';
 
 function AdminDashboard() {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingPackage, setEditingPackage] = useState(null);
+  const [activeTab, setActiveTab] = useState('packages'); // 'packages' or 'categories'
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -98,35 +100,62 @@ function AdminDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {!showForm ? (
-          <>
-            <div className="mb-6">
-              <button
-                onClick={() => setShowForm(true)}
-                className="btn-primary"
-              >
-                + Add New Package
-              </button>
-            </div>
 
-            {loading ? (
-              <div className="text-center py-20">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        {/* Tabs Navigation */}
+        {!showForm && (
+          <div className="flex border-b border-gray-200 mb-8">
+            <button
+              className={`py-4 px-6 font-medium text-sm focus:outline-none ${activeTab === 'packages' ? 'text-primary-600 border-b-2 border-primary-600' : 'text-gray-500 hover:text-gray-700'}`}
+              onClick={() => setActiveTab('packages')}
+            >
+              Packages
+            </button>
+            <button
+              className={`py-4 px-6 font-medium text-sm focus:outline-none ${activeTab === 'categories' ? 'text-primary-600 border-b-2 border-primary-600' : 'text-gray-500 hover:text-gray-700'}`}
+              onClick={() => setActiveTab('categories')}
+            >
+              Categories
+            </button>
+          </div>
+        )}
+
+        {/* Categories View */}
+        {activeTab === 'categories' && !showForm && (
+          <CategoryManager />
+        )}
+
+        {/* Packages View */}
+        {activeTab === 'packages' && (
+          !showForm ? (
+            <>
+              <div className="mb-6">
+                <button
+                  onClick={() => setShowForm(true)}
+                  className="btn-primary"
+                >
+                  + Add New Package
+                </button>
               </div>
-            ) : (
-              <PackageList
-                packages={packages}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            )}
-          </>
-        ) : (
-          <PackageForm
-            package={editingPackage}
-            onSuccess={handleFormSuccess}
-            onCancel={handleCancel}
-          />
+
+              {loading ? (
+                <div className="text-center py-20">
+                  <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                </div>
+              ) : (
+                <PackageList
+                  packages={packages}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              )}
+            </>
+          ) : (
+            <PackageForm
+              package={editingPackage}
+              onSuccess={handleFormSuccess}
+              onCancel={handleCancel}
+            />
+          )
         )}
       </main>
     </div >

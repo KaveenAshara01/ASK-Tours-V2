@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5000', onImageClick }) {
+function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -133,8 +133,8 @@ function MediaCarousel({ images = [], videos = [], baseUrl = 'http://localhost:5
               key={index}
               onClick={(e) => goToSlide(index, e)}
               className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
-                  ? 'bg-white w-6'
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                ? 'bg-white w-6'
+                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
                 }`}
               aria-label={`Go to slide ${index + 1}`}
             />

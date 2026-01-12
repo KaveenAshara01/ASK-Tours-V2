@@ -1,14 +1,41 @@
+import { useState, useEffect } from 'react';
+
+const heroImages = [
+  '/images/hero_safari.png',
+  '/images/hero_beach.jpg',
+  '/images/hero_beach_drone.png',
+  '/images/hero_waterfall.jpg',
+  '/images/hero_surfing.jpg',
+  '/images/hero_lounge.png'
+];
+
 function Hero() {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-gray-900 text-white min-h-[90vh] md:min-h-[600px] flex items-center">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-[url('/images/safari_hero.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-10000 hover:scale-105"
-        aria-hidden="true"
-      ></div>
+      {/* Background Images - Carousel */}
+      {heroImages.map((img, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${index === currentImage ? 'opacity-100' : 'opacity-0'
+            }`}
+          style={{ backgroundImage: `url('${img}')` }}
+          aria-hidden="true"
+        >
+
+        </div>
+      ))}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
+      <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-0"></div>
 
       <div className="relative max-w-7xl mx-auto text-center z-10 px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-0">
         <span className="block text-primary-300 font-bold tracking-widest uppercase mb-4 text-sm md:text-base animate-fade-in">
@@ -44,17 +71,13 @@ function Hero() {
       </div>
 
       {/* Scroll indicator for mobile */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/70">
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/90 z-30 drop-shadow-lg">
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto block align-middle">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="rgb(249 250 251)" />
-        </svg>
-      </div>
+
     </section>
   );
 }

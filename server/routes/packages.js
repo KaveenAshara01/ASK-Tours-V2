@@ -70,7 +70,11 @@ const deleteFiles = (filePaths) => {
 // Get all packages (public)
 router.get('/', async (req, res) => {
   try {
-    const packages = await Package.find().sort({ createdAt: -1 });
+    const query = {};
+    if (req.query.category) {
+      query.categories = req.query.category;
+    }
+    const packages = await Package.find(query).sort({ createdAt: -1 }).populate('categories', 'name');
     res.json(packages);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -98,6 +102,7 @@ router.post('/', auth, upload.fields([
   try {
     const { title, description, price, featured } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
+    const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
 
     const imageFiles = req.files?.images || [];
     const videoFiles = req.files?.videos || [];
@@ -116,7 +121,8 @@ router.post('/', auth, upload.fields([
       images,
       videos,
       featured: featured === 'true',
-      days
+      days,
+      categories
     });
 
     await package.save();
@@ -142,6 +148,7 @@ router.put('/:id', auth, upload.fields([
   try {
     const { title, description, price, featured, existingImages, existingVideos } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
+    const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
     const package = await Package.findById(req.params.id);
 
     if (!package) {
@@ -178,6 +185,7 @@ router.put('/:id', auth, upload.fields([
     package.price = price ? parseFloat(price) : package.price;
     package.featured = featured !== undefined ? featured === 'true' : package.featured;
     package.days = days || package.days;
+    package.categories = categories || package.categories;
     package.images = images;
     package.videos = videos;
 

@@ -1,0 +1,10 @@
+{
+    "welcome": "Bienvenido a ASK Tours",
+    "home": "Inicio",
+    "packages": "Paquetes",
+    "about": "Sobre nosotros",
+    "contact": "Contacto",
+    "language_suggestion": "Parece que nos visita desde {{country}}. ¿Le gustaría cambiar a {{language}}?",
+    "switch_language": "Cambiar a {{language}}",
+    "dismiss": "No, gracias"
+}

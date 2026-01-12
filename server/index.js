@@ -20,7 +20,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/tourism-packages', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tourism-packages', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -30,6 +30,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/tourism-p
 // Routes
 app.use('/api/packages', require('./routes/packages'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {

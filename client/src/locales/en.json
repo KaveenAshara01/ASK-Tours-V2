@@ -1,0 +1,28 @@
+{
+    "welcome": "Welcome to ASK Tours",
+    "home": "Home",
+    "packages": "Packages",
+    "about": "About Us",
+    "contact": "Contact",
+    "why_choose_us": {
+        "title": "Why Choose Us",
+        "subtitle": "Experience Sri Lanka with the best in the business",
+        "cards": {
+            "multilang": {
+                "title": "Multi-language Guides",
+                "desc": "Expert guides speaking Russian, English, German, and more."
+            },
+            "expert": {
+                "title": "Local Expertise",
+                "desc": "Native guides who know every hidden gem."
+            },
+            "support": {
+                "title": "24/7 Support",
+                "desc": "Always available to assist you, anytime, anywhere."
+            }
+        }
+    },
+    "language_suggestion": "It looks like you are visiting from {{country}}. Would you like to switch to {{language}}?",
+    "switch_language": "Switch to {{language}}",
+    "dismiss": "No thanks"
+}

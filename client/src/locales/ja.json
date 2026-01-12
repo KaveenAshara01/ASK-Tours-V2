@@ -1,0 +1,10 @@
+{
+    "welcome": "ASK Toursへようこそ",
+    "home": "ホーム",
+    "packages": "パッケージ",
+    "about": "私たちについて",
+    "contact": "お問い合わせ",
+    "language_suggestion": "{{country}}からアクセスされているようです。{{language}}に切り替えますか？",
+    "switch_language": "{{language}}に切り替える",
+    "dismiss": "いいえ、結構です"
+}

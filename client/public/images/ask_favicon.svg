@@ -1,0 +1,25 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" fill="white"/>
+  <defs>
+    <mask id="stripe-mask">
+      <rect width="64" height="64" fill="white"/>
+      <rect y="18" width="64" height="2" fill="black" />
+      <rect y="24" width="64" height="2" fill="black" />
+      <rect y="30" width="64" height="2" fill="black" />
+      <rect y="36" width="64" height="2" fill="black" />
+      <rect y="42" width="64" height="2" fill="black" />
+    </mask>
+  </defs>
+  <text 
+    x="32" 
+    y="45" 
+    text-anchor="middle" 
+    font-family="Arial, sans-serif" 
+    font-weight="900" 
+    font-size="28" 
+    fill="#0e3a6c"
+    mask="url(#stripe-mask)"
+  >
+    ASK
+  </text>
+</svg>

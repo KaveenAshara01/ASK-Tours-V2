@@ -15,7 +15,7 @@ function FloatingWhatsApp() {
             </svg>
             {/* Tooltip on Hover */}
             <span className="absolute right-full mr-4 bg-white text-gray-800 px-3 py-1 rounded-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md pointer-events-none">
-                Chat with us!
+                Ask from ASK!
             </span>
         </a>
     );

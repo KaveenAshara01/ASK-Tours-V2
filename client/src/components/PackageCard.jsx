@@ -26,7 +26,6 @@ function PackageCard({ package: pkg }) {
         <MediaCarousel
           images={images}
           videos={videos}
-          baseUrl="http://localhost:5000"
           onImageClick={() => navigate(`/package/${pkg._id}`)}
         />
         {pkg.featured && (

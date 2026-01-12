@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
 
 function Header() {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,9 +26,9 @@ function Header() {
   }
 
   const navLinks = [
-    { name: 'Packages', path: '/packages', type: 'link' },
-    { name: 'About Us', path: '/about', type: 'link' },
-    { name: 'Contact', path: '#contact', type: 'anchor' },
+    { name: t('packages'), path: '/packages', type: 'link' },
+    { name: t('about'), path: '/about', type: 'link' },
+    { name: t('contact'), path: '#contact', type: 'anchor' },
   ];
 
   // Determine header and text colors based on state
@@ -124,7 +126,7 @@ function Header() {
           ))}
 
           <div className="mt-12 pt-12 border-t border-gray-200 w-48 mx-auto">
-            <p className="text-gray-400 text-sm tracking-widest uppercase">Experience the Wild</p>
+            <p className="text-gray-400 text-sm tracking-widest uppercase">Discover Sri Lanka</p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 export default function Logo({ className = "h-10", color = "currentColor" }) {
-    // IBM-style striped pattern definition
+
     return (
         <svg
             viewBox="0 0 300 60"

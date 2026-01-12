@@ -20,6 +20,21 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [error, setError] = useState('');
 
   const [days, setDays] = useState([]);
+  const [categories, setCategories] = useState([]); // All available categories
+  const [selectedCategories, setSelectedCategories] = useState([]); // Selected category IDs
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('/api/categories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   useEffect(() => {
     if (pkg) {
@@ -32,6 +47,9 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       setDays(pkg.days || []);
       setExistingImages(pkg.images || []);
       setExistingVideos(pkg.videos || []);
+      // Map category objects to IDs if populated, or use IDs directly
+      const ids = pkg.categories ? pkg.categories.map(c => typeof c === 'object' ? c._id : c) : [];
+      setSelectedCategories(ids);
     }
   }, [pkg]);
 
@@ -126,6 +144,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       data.append('price', formData.price);
       data.append('featured', formData.featured);
       data.append('days', JSON.stringify(days));
+      data.append('categories', JSON.stringify(selectedCategories));
 
       // Append existing media arrays
       data.append('existingImages', JSON.stringify(existingImages));
@@ -218,6 +237,33 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
                 ],
               }}
             />
+          </div>
+        </div>
+
+        {/* Categories Section */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Categories
+          </label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {categories.map(cat => (
+              <label key={cat._id} className="flex items-center space-x-2 bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(cat._id)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedCategories([...selectedCategories, cat._id]);
+                    } else {
+                      setSelectedCategories(selectedCategories.filter(id => id !== cat._id));
+                    }
+                  }}
+                  className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                />
+                <span className="text-gray-700 font-medium">{cat.name}</span>
+              </label>
+            ))}
+            {categories.length === 0 && <p className="text-sm text-gray-500 col-span-full">No categories available. Please create some in Category Manager first.</p>}
           </div>
         </div>
 
