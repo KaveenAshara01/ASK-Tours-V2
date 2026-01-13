@@ -6,34 +6,9 @@ const fs = require('fs');
 const Gallery = require('../models/Gallery');
 const auth = require('../middleware/auth'); // Assuming you have auth middleware
 
-// Configure Multer for storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = 'server/uploads/'; // Correct path relative to project root
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, 'gallery-' + Date.now() + path.extname(file.originalname));
-    }
-});
+const { storage, cloudinary } = require('../config/cloudinary');
 
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-    fileFilter: function (req, file, cb) {
-        const filetypes = /jpeg|jpg|png|webp/;
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-        if (mimetype && extname) {
-            return cb(null, true);
-        }
-        cb(new Error("Error: Images Only!"));
-    }
-});
+const upload = multer({ storage });
 
 // GET /api/gallery - Fetch all images
 router.get('/', async (req, res) => {
@@ -46,9 +21,6 @@ router.get('/', async (req, res) => {
 });
 
 // POST /api/gallery - Upload new images (Admin only)
-// Supports multiple files upload
-// POST /api/gallery - Upload new images (Admin only)
-// Supports multiple files upload
 router.post('/', auth, upload.any(), async (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
@@ -57,8 +29,8 @@ router.post('/', auth, upload.any(), async (req, res) => {
 
         const promises = req.files.map(file => {
             const newImage = new Gallery({
-                url: `/uploads/${file.filename}`,
-                title: req.body.title || 'Gallery Image' // Optional title
+                url: file.path, // Cloudinary URL
+                title: req.body.title || 'Gallery Image'
             });
             return newImage.save();
         });
@@ -78,10 +50,23 @@ router.delete('/:id', auth, async (req, res) => {
             return res.status(404).json({ message: 'Image not found' });
         }
 
-        // Try to delete file from filesystem
-        const filePath = path.join(__dirname, '../uploads', path.basename(image.url));
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+        // Delete from Cloudinary
+        if (image.url.includes('cloudinary.com')) {
+            const splitUrl = image.url.split('/');
+            const filename = splitUrl[splitUrl.length - 1];
+            const folder = splitUrl[splitUrl.length - 2];
+            const publicId = `${folder}/${filename.split('.')[0]}`;
+            try {
+                await cloudinary.uploader.destroy(publicId);
+            } catch (err) {
+                console.error("Cloudinary delete error:", err);
+            }
+        } else {
+            // Legacy Local Delete
+            const filePath = path.join(__dirname, '../uploads', path.basename(image.url));
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
         }
 
         await Gallery.findByIdAndDelete(req.params.id);

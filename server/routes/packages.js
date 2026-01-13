@@ -7,50 +7,34 @@ const Package = require('../models/Package');
 const auth = require('../middleware/auth');
 
 // Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'server/uploads/');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'package-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
+const { storage, cloudinary } = require('../config/cloudinary');
 
-// File filter for images and videos
-const fileFilter = (req, file, cb) => {
-  const extname = path.extname(file.originalname).toLowerCase().replace('.', '');
-  const mimetype = file.mimetype;
-
-  const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-  const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'avi'];
-
-  if (imageExts.includes(extname)) {
-    if (mimetype.startsWith('image/') || mimetype === 'application/octet-stream') {
-      return cb(null, true);
-    }
-  }
-
-  if (videoExts.includes(extname)) {
-    if (mimetype.startsWith('video/') || mimetype === 'application/octet-stream' || mimetype === 'application/ogg') {
-      return cb(null, true);
-    }
-  }
-
-  cb(new Error('Only image and video files are allowed'));
-};
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 100 * 1024 * 1024 }, // 100MB limit for videos
-  fileFilter: fileFilter
-});
+const upload = multer({ storage });
 
 // Helper function to delete files
-const deleteFiles = (filePaths) => {
-  filePaths.forEach(filePath => {
-    if (filePath) {
-      // Remove leading slash if present and construct full path
+const deleteFiles = async (filePaths) => {
+  if (!filePaths || !Array.isArray(filePaths)) return;
+
+  for (const filePath of filePaths) {
+    if (!filePath) continue;
+
+    if (filePath.includes('cloudinary.com')) {
+      try {
+        const splitUrl = filePath.split('/');
+        const filename = splitUrl[splitUrl.length - 1];
+        const folder = splitUrl[splitUrl.length - 2];
+        const publicId = `${folder}/${filename.split('.')[0]}`;
+        const isVideo = filename.match(/\.(mp4|webm|ogg|mov|avi)$/i);
+
+        await cloudinary.uploader.destroy(publicId, {
+          resource_type: isVideo ? 'video' : 'image'
+        });
+        console.log(`Deleted Cloudinary file: ${publicId}`);
+      } catch (err) {
+        console.error(`Error deleting Cloudinary file ${filePath}:`, err);
+      }
+    } else {
+      // Legacy local file deletion
       const cleanPath = filePath.startsWith('/') ? filePath.slice(1) : filePath;
       const fullPath = path.join(__dirname, '..', cleanPath);
       if (fs.existsSync(fullPath)) {
@@ -60,11 +44,9 @@ const deleteFiles = (filePaths) => {
         } catch (err) {
           console.error(`Error deleting file ${fullPath}:`, err);
         }
-      } else {
-        console.warn(`File not found: ${fullPath}`);
       }
     }
-  });
+  }
 };
 
 // Get all packages (public)
@@ -111,8 +93,9 @@ router.post('/', auth, upload.fields([
       return res.status(400).json({ message: 'At least one image or video is required' });
     }
 
-    const images = imageFiles.map(file => `/uploads/${file.filename}`);
-    const videos = videoFiles.map(file => `/uploads/${file.filename}`);
+    // Use file.path for Cloudinary URLs
+    const images = imageFiles.map(file => file.path);
+    const videos = videoFiles.map(file => file.path);
 
     const package = new Package({
       title,
@@ -128,14 +111,11 @@ router.post('/', auth, upload.fields([
     await package.save();
     res.status(201).json(package);
   } catch (error) {
-    // Delete uploaded files if package creation fails
+    // Attempt cleanup if save fails (best effort)
     const allFiles = [...(req.files?.images || []), ...(req.files?.videos || [])];
-    allFiles.forEach(file => {
-      const filePath = path.join(__dirname, '..', 'uploads', file.filename);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    });
+    const filePaths = allFiles.map(f => f.path);
+    if (filePaths.length > 0) deleteFiles(filePaths);
+
     res.status(400).json({ message: error.message });
   }
 });
@@ -166,11 +146,11 @@ router.put('/:id', auth, upload.fields([
     // Combine existing and new media
     const images = [
       ...existingImagesArray,
-      ...newImageFiles.map(file => `/uploads/${file.filename}`)
+      ...newImageFiles.map(file => file.path)
     ];
     const videos = [
       ...existingVideosArray,
-      ...newVideoFiles.map(file => `/uploads/${file.filename}`)
+      ...newVideoFiles.map(file => file.path)
     ];
 
     // Find files to delete (files that were removed)
@@ -178,7 +158,7 @@ router.put('/:id', auth, upload.fields([
     const videosToDelete = package.videos.filter(vid => !existingVideosArray.includes(vid));
 
     // Delete removed files
-    deleteFiles([...imagesToDelete, ...videosToDelete]);
+    await deleteFiles([...imagesToDelete, ...videosToDelete]);
 
     package.title = title || package.title;
     package.description = description || package.description;
@@ -192,14 +172,11 @@ router.put('/:id', auth, upload.fields([
     await package.save();
     res.json(package);
   } catch (error) {
-    // Delete uploaded files if update fails
+    // Cleanup new uploads if update fails
     const allFiles = [...(req.files?.images || []), ...(req.files?.videos || [])];
-    allFiles.forEach(file => {
-      const filePath = path.join(__dirname, '..', 'uploads', file.filename);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    });
+    const filePaths = allFiles.map(f => f.path);
+    if (filePaths.length > 0) deleteFiles(filePaths);
+
     res.status(400).json({ message: error.message });
   }
 });
@@ -218,7 +195,7 @@ router.delete('/:id', auth, async (req, res) => {
       ...(package.videos || []),
       ...(package.image ? [package.image] : []) // Backward compatibility
     ];
-    deleteFiles(allFiles);
+    await deleteFiles(allFiles);
 
     // Delete the package
     await Package.findByIdAndDelete(req.params.id);

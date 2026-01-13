@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import MediaCarousel from './MediaCarousel';
+import { optimizeImage } from '../utils/imageOptimizer';
 
 function PackageCard({ package: pkg }) {
   const navigate = useNavigate();
@@ -7,11 +8,13 @@ function PackageCard({ package: pkg }) {
 
 
   // Backward compatibility: if old image field exists, convert it to images array
-  const images = pkg.images && pkg.images.length > 0
+  const rawImages = pkg.images && pkg.images.length > 0
     ? pkg.images
     : pkg.image
       ? [pkg.image]
       : [];
+
+  const images = rawImages.map(img => optimizeImage(img, 600));
   const videos = pkg.videos || [];
 
   return (

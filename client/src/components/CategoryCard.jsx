@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { optimizeImage } from '../utils/imageOptimizer';
 
 function CategoryCard({ category }) {
     // Use category image if available, otherwise a placeholder color
-    const bgImage = category.coverImage || '/images/hero_beach.jpg';
+    const bgImage = optimizeImage(category.coverImage, 800) || '/images/hero_beach.jpg';
 
     return (
         <Link

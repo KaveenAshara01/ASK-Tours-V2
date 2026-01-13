@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 
-function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick }) {
+function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick, autoplay = false, interval = 3000 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const allMedia = [
     ...images.map(img => ({ type: 'image', url: img })),
@@ -15,6 +16,17 @@ function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick })
   useEffect(() => {
     setCurrentIndex(0);
   }, [images.length, videos.length]);
+
+  // Autoplay Effect
+  useEffect(() => {
+    if (!autoplay || allMedia.length <= 1 || isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev === allMedia.length - 1 ? 0 : prev + 1));
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [autoplay, interval, allMedia.length, isPaused]);
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -78,6 +90,8 @@ function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick })
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Media Display */}
       <div className="relative w-full h-full" onClick={onImageClick ? (e) => onImageClick(e) : undefined}>
