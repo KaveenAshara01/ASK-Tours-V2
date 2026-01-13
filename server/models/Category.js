@@ -15,6 +15,10 @@ const categorySchema = new mongoose.Schema({
         type: String, // URL relative to public/images or absolute URL
         default: ''
     },
+    contentImage: {
+        type: String, // Background image for the content section
+        default: ''
+    },
     createdAt: {
         type: Date,
         default: Date.now

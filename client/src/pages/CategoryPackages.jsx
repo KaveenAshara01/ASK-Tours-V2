@@ -53,26 +53,20 @@ function CategoryPackages() {
 
     return (
         <div className="bg-gray-50 min-h-screen font-sans">
-            <ScrollToTop />
             <Header />
 
-            {/* Wave Clip Path Definition */}
-            <svg className="absolute w-0 h-0">
-                <defs>
-                    <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-                        <path d="M0,0.02 C0.25,0.1 0.25,0 0.5,0 S0.75,0.1 1,0.02 L1,1 L0,1 Z" />
-                    </clipPath>
-                </defs>
-            </svg>
+
 
             {/* Header/Hero for Category */}
-            <div className="relative h-[40vh] md:h-[50vh] overflow-hidden">
+            <div className="relative min-h-[60vh] md:min-h-[50vh] flex items-center justify-center overflow-hidden">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: category?.coverImage ? `url('${category.coverImage}')` : "url('/images/hero_beach.jpg')" }}
                 />
                 <div className="absolute inset-0 bg-black/50" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+
+                {/* Content Container - Relative to take up space */}
+                <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 pt-44 pb-48 md:pt-36 md:pb-56">
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg font-display">
                         {category?.name || 'Category'}
                     </h1>
@@ -85,18 +79,21 @@ function CategoryPackages() {
                 </div>
             </div>
 
-            {/* Main Content with Wave Overlap */}
+            {/* Main Content with Rounded Top Overlap */}
             <div className="relative -mt-24 z-20 filter drop-shadow-xl">
-                <div className="bg-gray-50 pt-24 pb-16 px-4 rounded-t-[3rem] md:rounded-none clip-wave-md min-h-[50vh]">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="flex items-center justify-between mb-8">
-                            <p className="text-gray-600">
-                                Found {packages.length} {packages.length === 1 ? 'package' : 'packages'}
-                            </p>
-                            <Link to="/" className="text-primary-600 hover:text-primary-700 font-medium flex items-center">
-                                &larr; Back to Home
-                            </Link>
-                        </div>
+                <div className="relative pt-12 pb-16 px-4 rounded-t-[3rem] min-h-[50vh] overflow-hidden">
+
+                    {/* Background Overlay */}
+                    <div
+                        className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
+                        style={{ backgroundImage: category?.contentImage ? `url('${category.contentImage}')` : (category?.coverImage ? `url('${category.coverImage}')` : "url('/images/hero_beach.jpg')") }}
+                    />
+                    <div className="absolute inset-0 z-0 bg-white/70 backdrop-blur-[2px]"></div>
+
+                    <div className="relative z-10 max-w-7xl mx-auto">
+
+
+
 
                         {packages.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -113,6 +110,19 @@ function CategoryPackages() {
                                 </Link>
                             </div>
                         )}
+
+                        {/* Budget Disclaimer (Bottom) */}
+                        <div className="text-center max-w-3xl mx-auto mt-20 mb-8 px-4 border-t border-gray-200 pt-16">
+                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600 mb-4 ring-4 ring-primary-50">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Flexible & Personalized Tours</h3>
+                            <p className="text-gray-600 leading-relaxed">
+                                We specialize in creating experiences for every budget. accommodations and activities can be fully customized to align with your personal preferences and needs.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

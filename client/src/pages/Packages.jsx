@@ -1,40 +1,51 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import SEO from '../components/SEO';
+
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import PackageCard from '../components/PackageCard';
+import CategoryCard from '../components/CategoryCard';
 import ContactSection from '../components/ContactSection';
 
 function Packages() {
-    const [packages, setPackages] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchPackages();
+        fetchCategories();
         // Scroll to top when component mounts
         window.scrollTo(0, 0);
     }, []);
 
-    const fetchPackages = async () => {
+    const fetchCategories = async () => {
         try {
-            const response = await axios.get('/api/packages');
-            setPackages(response.data);
+            const response = await axios.get('/api/categories');
+            setCategories(response.data);
         } catch (error) {
-            console.error('Error fetching packages:', error);
+            console.error('Error fetching categories:', error);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="bg-gray-50 min-h-screen">
             <SEO
                 title="Our Packages"
-                description="Explore our exclusive elephant safari packages. Choose from a variety of tours designed to give you the best wildlife experience in Sri Lanka."
-                keywords="safari packages, tour packages, sri lanka wildlife, safari booking"
+                description="Explore our wide range of tour categories. Choose from beach holidays, cultural tours, wildlife safaris, and more."
+                keywords="sri lanka tour categories, holiday packages, travel categories"
             />
             <Header />
+
+            {/* Wave Clip Path Definition */}
+            <svg className="absolute w-0 h-0">
+                <defs>
+                    <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+                        <path d="M0,0.02 C0.25,0.15 0.25,0 0.5,0 S0.75,0.15 1,0.02 L1,1 L0,1 Z" />
+                    </clipPath>
+                </defs>
+            </svg>
 
             {/* Hero Section */}
             <div className="relative h-[400px] bg-gray-900 flex items-center justify-center overflow-hidden">
@@ -44,39 +55,48 @@ function Packages() {
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60"></div>
                 <div className="relative z-10 text-center px-4 animate-fade-in-up">
-                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">Our Exclusive Packages</h1>
+                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">Discover Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">Journey</span></h1>
                     <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                        Choose your perfect adventure from our carefully curated collection
+                        Explore our curated travel collections and find your perfect Sri Lankan adventure.
                     </p>
                 </div>
             </div>
 
-            {/* Packages Grid */}
-            <section className="py-12 md:py-20 px-4">
-                <div className="max-w-7xl mx-auto">
-                    {loading ? (
-                        <div className="text-center py-20">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-                        </div>
-                    ) : packages.length === 0 ? (
-                        <div className="text-center py-20">
-                            <p className="text-gray-600 text-xl">No packages available at the moment.</p>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                            {packages.map((pkg, index) => (
-                                <div
-                                    key={pkg._id}
-                                    className="animate-fade-in-up"
-                                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
-                                >
-                                    <PackageCard package={pkg} />
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
+            {/* Categories Grid with Wave */}
+            <div className="relative -mt-24 z-20 filter drop-shadow-xl">
+                <section className="relative pt-32 pb-20 px-4 rounded-t-[3rem] md:rounded-none clip-wave-md min-h-[60vh] overflow-hidden">
+                    {/* Background Overlay */}
+                    <div
+                        className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
+                        style={{ backgroundImage: "url('/images/hero_beach_drone.png')" }}
+                    />
+                    <div className="absolute inset-0 z-0 bg-white/70 backdrop-blur-[2px]"></div>
+
+                    <div className="relative z-10 max-w-7xl mx-auto">
+                        {loading ? (
+                            <div className="text-center py-20">
+                                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                            </div>
+                        ) : categories.length === 0 ? (
+                            <div className="text-center py-20">
+                                <p className="text-gray-600 text-xl">No categories available at the moment.</p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {categories.map((cat, index) => (
+                                    <div
+                                        key={cat._id}
+                                        className="animate-fade-in-up"
+                                        style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+                                    >
+                                        <CategoryCard category={cat} />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            </div>
 
             <ContactSection />
             <Footer />

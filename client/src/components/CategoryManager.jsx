@@ -10,12 +10,15 @@ function CategoryManager() {
     const [editingCategory, setEditingCategory] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState('');
+    const [contentImageFile, setContentImageFile] = useState(null);
+    const [contentPreviewUrl, setContentPreviewUrl] = useState('');
 
     // Form State
     const [formData, setFormData] = useState({
         name: '',
         description: '',
-        coverImage: ''
+        coverImage: '',
+        contentImage: ''
     });
 
     useEffect(() => {
@@ -49,6 +52,14 @@ function CategoryManager() {
         }
     };
 
+    const handleContentFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setContentImageFile(file);
+            setContentPreviewUrl(URL.createObjectURL(file));
+        }
+    };
+
     const handleDescriptionChange = (value) => {
         setFormData(prev => ({ ...prev, description: value }));
     };
@@ -66,6 +77,12 @@ function CategoryManager() {
             data.append('coverImage', imageFile);
         } else if (formData.coverImage) {
             data.append('coverImage', formData.coverImage);
+        }
+
+        if (contentImageFile) {
+            data.append('contentImage', contentImageFile);
+        } else if (formData.contentImage) {
+            data.append('contentImage', formData.contentImage);
         }
 
         try {
@@ -94,10 +111,13 @@ function CategoryManager() {
         setFormData({
             name: category.name,
             description: category.description || '',
-            coverImage: category.coverImage || ''
+            coverImage: category.coverImage || '',
+            contentImage: category.contentImage || ''
         });
         setPreviewUrl(category.coverImage || '');
+        setContentPreviewUrl(category.contentImage || '');
         setImageFile(null);
+        setContentImageFile(null);
         setShowForm(true);
     };
 
@@ -116,13 +136,18 @@ function CategoryManager() {
     };
 
     const resetForm = () => {
-        setFormData({ name: '', description: '', coverImage: '' });
+        setFormData({ name: '', description: '', coverImage: '', contentImage: '' });
         setEditingCategory(null);
         setImageFile(null);
+        setContentImageFile(null);
         if (previewUrl && !previewUrl.startsWith('/')) {
             URL.revokeObjectURL(previewUrl);
         }
+        if (contentPreviewUrl && !contentPreviewUrl.startsWith('/')) {
+            URL.revokeObjectURL(contentPreviewUrl);
+        }
         setPreviewUrl('');
+        setContentPreviewUrl('');
         setShowForm(false);
     };
 
@@ -167,7 +192,7 @@ function CategoryManager() {
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Cover Image</label>
+                            <label className="block text-sm font-medium text-gray-700">Cover Image (Hero)</label>
                             <div className="mt-2 flex items-center gap-4">
                                 <div className="w-full">
                                     <input
@@ -176,11 +201,31 @@ function CategoryManager() {
                                         onChange={handleFileChange}
                                         className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
                                     />
-                                    <p className="text-xs text-gray-500 mt-1">Upload a cover image (Max 5MB)</p>
+                                    <p className="text-xs text-gray-500 mt-1">Upload a hero cover image (Max 10MB)</p>
                                 </div>
                                 {previewUrl && (
                                     <div className="flex-shrink-0 relative h-20 w-32 border rounded overflow-hidden">
                                         <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Content Background Image (Blurry)</label>
+                            <div className="mt-2 flex items-center gap-4">
+                                <div className="w-full">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleContentFileChange}
+                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">Upload a background image for the list section (Max 10MB)</p>
+                                </div>
+                                {contentPreviewUrl && (
+                                    <div className="flex-shrink-0 relative h-20 w-32 border rounded overflow-hidden">
+                                        <img src={contentPreviewUrl} alt="Content Preview" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                             </div>

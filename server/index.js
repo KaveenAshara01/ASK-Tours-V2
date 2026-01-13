@@ -31,6 +31,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/tourism-p
 app.use('/api/packages', require('./routes/packages'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
+app.use('/api/gallery', require('./routes/galleryRoutes'));
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {

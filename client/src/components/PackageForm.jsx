@@ -7,7 +7,6 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    price: '',
     featured: false,
   });
   const [images, setImages] = useState([]);
@@ -41,7 +40,6 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       setFormData({
         title: pkg.title || '',
         description: pkg.description || '',
-        price: pkg.price || '',
         featured: pkg.featured || false,
       });
       setDays(pkg.days || []);
@@ -141,7 +139,6 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       const data = new FormData();
       data.append('title', formData.title);
       data.append('description', formData.description);
-      data.append('price', formData.price);
       data.append('featured', formData.featured);
       data.append('days', JSON.stringify(days));
       data.append('categories', JSON.stringify(selectedCategories));
@@ -338,22 +335,8 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 border-t border-gray-200 pt-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Price (USD) *
-            </label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              className="input-field"
-              min="0"
-              step="0.01"
-              required
-            />
-          </div>
+        <div className="grid grid-cols-1 gap-4 border-t border-gray-200 pt-6">
+
 
           <div className="flex items-center pt-8">
             <label className="flex items-center cursor-pointer">

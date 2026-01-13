@@ -41,3 +41,12 @@
     }
   }
 }
+
+/* Hide Swiper Navigation Arrows on Mobile for Home Page Products Carousel */
+@media (max-width: 767px) {
+
+  .products-swiper .swiper-button-next,
+  .products-swiper .swiper-button-prev {
+    display: none !important;
+  }
+}

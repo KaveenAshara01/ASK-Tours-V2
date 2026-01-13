@@ -49,7 +49,7 @@ function Home() {
       <svg className="absolute w-0 h-0">
         <defs>
           <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-            <path d="M0,0.02 C0.25,0.1 0.25,0 0.5,0 S0.75,0.1 1,0.02 L1,1 L0,1 Z" />
+            <path d="M0,0.02 C0.25,0.15 0.25,0 0.5,0 S0.75,0.15 1,0.02 L1,1 L0,1 Z" />
           </clipPath>
         </defs>
       </svg>

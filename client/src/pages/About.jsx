@@ -14,6 +14,15 @@ function About() {
             />
             <Header />
 
+            {/* Wave Clip Path Definition */}
+            <svg className="absolute w-0 h-0">
+                <defs>
+                    <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+                        <path d="M0,0.02 C0.25,0.15 0.25,0 0.5,0 S0.75,0.15 1,0.02 L1,1 L0,1 Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+
             {/* Hero Section */}
             <div className="relative h-[400px] bg-gray-900 flex items-center justify-center overflow-hidden">
                 <div
@@ -29,26 +38,28 @@ function About() {
                 </div>
             </div>
 
-            {/* Our Story Section */}
-            <section className="py-20 px-4">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
-                        <div className="w-20 h-1 bg-primary-600 mx-auto rounded-full"></div>
+            {/* Our Story Section with Wave */}
+            <div className="relative -mt-24 z-20 filter drop-shadow-xl">
+                <section className="bg-gray-50 pt-32 pb-20 px-4 rounded-t-[3rem] md:rounded-none clip-wave-md">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
+                            <div className="w-20 h-1 bg-primary-600 mx-auto rounded-full"></div>
+                        </div>
+                        <div className="prose prose-lg mx-auto text-gray-600">
+                            <p className="mb-6 text-lg leading-relaxed text-center">
+                                Founded with a passion for sharing the beauty of our island,
+                                ASK Tours has grown into a full-service travel agency dedicated to creating unforgettable Sri Lankan experiences.
+                                We specialize in everything from thrill-seeking wildlife safaris to serene cultural immersions.
+                            </p>
+                            <p className="text-lg leading-relaxed text-center">
+                                Whether you're looking to explore the ancient cities, relax on pristine beaches, or witness the majestic elephants of Minneriya,
+                                our expert team is here to craft the perfect itinerary for you. We are committed to sustainable tourism and exceptional service.
+                            </p>
+                        </div>
                     </div>
-                    <div className="prose prose-lg mx-auto text-gray-600">
-                        <p className="mb-6 text-lg leading-relaxed text-center">
-                            Founded with a passion for sharing the beauty of our island,
-                            ASK Tours has grown into a full-service travel agency dedicated to creating unforgettable Sri Lankan experiences.
-                            We specialize in everything from thrill-seeking wildlife safaris to serene cultural immersions.
-                        </p>
-                        <p className="text-lg leading-relaxed text-center">
-                            Whether you're looking to explore the ancient cities, relax on pristine beaches, or witness the majestic elephants of Minneriya,
-                            our expert team is here to craft the perfect itinerary for you. We are committed to sustainable tourism and exceptional service.
-                        </p>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* Why Choose Us Section */}
             <section className="py-20 bg-white">

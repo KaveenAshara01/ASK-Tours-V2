@@ -10,11 +10,7 @@ const packageSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  price: {
-    type: Number,
-    required: true,
-    min: 0
-  },
+
   images: {
     type: [String],
     default: []

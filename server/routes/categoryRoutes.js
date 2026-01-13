@@ -48,26 +48,34 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
 
 // Configure static file serving for uploads if not already handled in index.js
 // It's assumed index.js handles /uploads static serving.
 
 // Create category (Admin only)
-router.post('/', auth, upload.single('coverImage'), async (req, res) => {
+router.post('/', auth, upload.fields([{ name: 'coverImage', maxCount: 1 }, { name: 'contentImage', maxCount: 1 }]), async (req, res) => {
     try {
         const categoryData = {
             name: req.body.name,
             description: req.body.description,
         };
 
-        if (req.file) {
-            categoryData.coverImage = `/uploads/${req.file.filename}`;
-        } else if (req.body.coverImage) {
-            // Allow manual URL if no file uploaded (fallback/legacy)
-            categoryData.coverImage = req.body.coverImage;
+        // Handle File Uploads
+        if (req.files) {
+            if (req.files.coverImage) {
+                categoryData.coverImage = `/uploads/${req.files.coverImage[0].filename}`;
+            }
+            if (req.files.contentImage) {
+                categoryData.contentImage = `/uploads/${req.files.contentImage[0].filename}`;
+            }
         }
+
+        // Handle Manual String URLs (Fallback)
+        if (req.body.coverImage) categoryData.coverImage = req.body.coverImage;
+        if (req.body.contentImage) categoryData.contentImage = req.body.contentImage;
+
 
         const category = new Category(categoryData);
         const newCategory = await category.save();
@@ -78,7 +86,7 @@ router.post('/', auth, upload.single('coverImage'), async (req, res) => {
 });
 
 // Update category (Admin only)
-router.put('/:id', auth, upload.single('coverImage'), async (req, res) => {
+router.put('/:id', auth, upload.fields([{ name: 'coverImage', maxCount: 1 }, { name: 'contentImage', maxCount: 1 }]), async (req, res) => {
     try {
         const category = await Category.findById(req.params.id);
         if (!category) return res.status(404).json({ message: 'Category not found' });
@@ -86,13 +94,17 @@ router.put('/:id', auth, upload.single('coverImage'), async (req, res) => {
         if (req.body.name) category.name = req.body.name;
         if (req.body.description) category.description = req.body.description;
 
-        if (req.file) {
-            // Optional: Delete old image if it exists and is local
-            // if (category.coverImage && category.coverImage.startsWith('/uploads/')) { ... }
-            category.coverImage = `/uploads/${req.file.filename}`;
-        } else if (req.body.coverImage) {
-            category.coverImage = req.body.coverImage;
+        if (req.files) {
+            if (req.files.coverImage) {
+                category.coverImage = `/uploads/${req.files.coverImage[0].filename}`;
+            }
+            if (req.files.contentImage) {
+                category.contentImage = `/uploads/${req.files.contentImage[0].filename}`;
+            }
         }
+
+        if (req.body.coverImage) category.coverImage = req.body.coverImage;
+        if (req.body.contentImage) category.contentImage = req.body.contentImage;
 
         const updatedCategory = await category.save();
         res.json(updatedCategory);

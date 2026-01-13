@@ -4,6 +4,7 @@ import axios from 'axios';
 import PackageForm from '../components/PackageForm';
 import PackageList from '../components/PackageList';
 import CategoryManager from '../components/CategoryManager';
+import GalleryManager from '../components/admin/GalleryManager';
 
 function AdminDashboard() {
   const [packages, setPackages] = useState([]);
@@ -116,12 +117,23 @@ function AdminDashboard() {
             >
               Categories
             </button>
+            <button
+              className={`py-4 px-6 font-medium text-sm focus:outline-none ${activeTab === 'gallery' ? 'text-primary-600 border-b-2 border-primary-600' : 'text-gray-500 hover:text-gray-700'}`}
+              onClick={() => setActiveTab('gallery')}
+            >
+              Gallery
+            </button>
           </div>
         )}
 
         {/* Categories View */}
         {activeTab === 'categories' && !showForm && (
           <CategoryManager />
+        )}
+
+        {/* Gallery View */}
+        {activeTab === 'gallery' && !showForm && (
+          <GalleryManager />
         )}
 
         {/* Packages View */}

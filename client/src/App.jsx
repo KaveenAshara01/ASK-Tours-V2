@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import About from './pages/About';
+import Gallery from './pages/Gallery';
 import Packages from './pages/Packages';
 import AdminDashboard from './pages/AdminDashboard';
 import PackageDetails from './pages/PackageDetails';
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/package/:id" element={<PackageDetails />} />
           <Route path="/category/:id" element={<CategoryPackages />} />

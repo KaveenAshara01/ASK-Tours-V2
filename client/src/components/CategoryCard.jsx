@@ -6,6 +6,7 @@ function CategoryCard({ category }) {
 
     return (
         <Link
+            reloadDocument
             to={`/category/${category._id}`}
             className="group relative block h-96 w-full overflow-hidden rounded-2xl shadow-lg transition-transform duration-500 hover:-translate-y-2 hover:shadow-2xl"
         >

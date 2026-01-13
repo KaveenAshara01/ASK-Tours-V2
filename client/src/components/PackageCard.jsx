@@ -4,13 +4,7 @@ import MediaCarousel from './MediaCarousel';
 function PackageCard({ package: pkg }) {
   const navigate = useNavigate();
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
+
 
   // Backward compatibility: if old image field exists, convert it to images array
   const images = pkg.images && pkg.images.length > 0
@@ -27,6 +21,8 @@ function PackageCard({ package: pkg }) {
           images={images}
           videos={videos}
           onImageClick={() => navigate(`/package/${pkg._id}`)}
+          autoplay={true}
+          interval={4000}
         />
         {pkg.featured && (
           <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold z-20">
@@ -42,11 +38,10 @@ function PackageCard({ package: pkg }) {
           className="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none flex-grow"
           dangerouslySetInnerHTML={{ __html: pkg.description }}
         />
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-          <span className="text-3xl font-bold text-primary-600">{formatPrice(pkg.price)}</span>
+        <div className="flex items-center justify-center mt-auto pt-4 border-t border-gray-100">
           <Link
             to={`/package/${pkg._id}`}
-            className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg transition-colors font-semibold"
+            className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg transition-colors font-semibold"
           >
             View Details
           </Link>

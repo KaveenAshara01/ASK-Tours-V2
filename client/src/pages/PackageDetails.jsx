@@ -4,8 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SEO from '../components/SEO';
 import MediaCarousel from '../components/MediaCarousel';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.bubble.css'; // Use bubble theme for read-only view
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -56,12 +54,7 @@ function PackageDetails() {
         );
     }
 
-    // Format price
-    const formattedPrice = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0,
-    }).format(pkg.price);
+
 
     // Prepare media
     const images = pkg.images && pkg.images.length > 0
@@ -75,7 +68,7 @@ function PackageDetails() {
         <div className="min-h-screen bg-white flex flex-col">
             <SEO
                 title={pkg.title}
-                description={`Book your ${pkg.title} tour today! Price: ${formattedPrice}. An unforgettable wildlife adventure awaiting you.`}
+                description={`Book your ${pkg.title} tour today! An unforgettable wildlife adventure awaiting you.`}
                 image={images[0]}
             />
             <Header />
@@ -99,14 +92,7 @@ function PackageDetails() {
                         <h1 className="text-3xl md:text-6xl font-extrabold mb-2 md:mb-4 leading-tight shadow-sm">
                             {pkg.title}
                         </h1>
-                        <div className="flex flex-wrap items-center gap-3 md:gap-6">
-                            <span className="text-2xl md:text-3xl font-bold text-primary-400">
-                                {formattedPrice}
-                            </span>
-                            <span className="text-gray-300 text-sm md:text-lg">
-                                / per person
-                            </span>
-                        </div>
+
                     </div>
                 </div>
 
@@ -122,11 +108,9 @@ function PackageDetails() {
                                     Overview
                                 </h2>
                                 <div className="prose prose-lg text-gray-600 max-w-none">
-                                    <ReactQuill
-                                        value={pkg.description}
-                                        readOnly={true}
-                                        theme="bubble"
-                                        modules={{ toolbar: false }}
+                                    <div
+                                        className="prose prose-lg prose-slate font-sans text-gray-600 max-w-none [&>p]:mb-4"
+                                        dangerouslySetInnerHTML={{ __html: pkg.description }}
                                     />
                                 </div>
                             </div>
@@ -161,11 +145,9 @@ function PackageDetails() {
                                                 </div>
                                                 <div className="p-8">
                                                     <div className="text-gray-600 prose max-w-none">
-                                                        <ReactQuill
-                                                            value={day.description}
-                                                            readOnly={true}
-                                                            theme="bubble"
-                                                            modules={{ toolbar: false }}
+                                                        <div
+                                                            className="prose prose-slate font-sans text-gray-600 max-w-none [&>p]:mb-2"
+                                                            dangerouslySetInnerHTML={{ __html: day.description }}
                                                         />
                                                     </div>
                                                 </div>

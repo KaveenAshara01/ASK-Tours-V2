@@ -27,6 +27,7 @@ function Header() {
 
   const navLinks = [
     { name: t('packages'), path: '/packages', type: 'link' },
+    { name: 'Gallery', path: '/gallery', type: 'link' },
     { name: t('about'), path: '/about', type: 'link' },
     { name: t('contact'), path: '#contact', type: 'anchor' },
   ];
