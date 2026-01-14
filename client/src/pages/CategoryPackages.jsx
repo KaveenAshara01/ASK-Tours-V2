@@ -120,7 +120,7 @@ function CategoryPackages() {
                             </div>
                             <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Flexible & Personalized Tours</h3>
                             <p className="text-gray-600 leading-relaxed">
-                                We specialize in creating experiences for every budget. accommodations and activities can be fully customized to align with your personal preferences and needs.
+                                We operate across all the budget ranges. accommodations and activities can be fully customized to align with your personal preferences and needs.
                             </p>
                         </div>
                     </div>

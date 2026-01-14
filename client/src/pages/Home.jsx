@@ -55,7 +55,7 @@ function Home() {
       </svg>
 
       {/* Wrapper for Drop Shadow (since clip-path clips normal box-shadow) */}
-      <div className="relative mt-0 md:-mt-24 z-20 filter drop-shadow-2xl">
+      <div className="relative mt-0 md:-mt-36 z-20 filter drop-shadow-2xl">
         <section
           id="packages"
           className="relative pt-24 pb-12 md:pb-20 px-4 overflow-hidden rounded-t-[3rem] md:rounded-none clip-wave-md"
