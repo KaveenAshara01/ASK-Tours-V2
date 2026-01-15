@@ -6,6 +6,10 @@ const packageSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  duration: {
+    type: String,
+    required: false // Optional for backward compatibility, or true if mandatory. User said "edit values later", so false is safer.
+  },
   description: {
     type: String,
     required: true

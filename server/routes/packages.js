@@ -82,7 +82,7 @@ router.post('/', auth, upload.fields([
   { name: 'videos', maxCount: 10 }
 ]), async (req, res) => {
   try {
-    const { title, description, price, featured } = req.body;
+    const { title, description, price, featured, duration } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
 
@@ -100,6 +100,7 @@ router.post('/', auth, upload.fields([
     const package = new Package({
       title,
       description,
+      duration,
       price: parseFloat(price),
       images,
       videos,
@@ -126,7 +127,7 @@ router.put('/:id', auth, upload.fields([
   { name: 'videos', maxCount: 10 }
 ]), async (req, res) => {
   try {
-    const { title, description, price, featured, existingImages, existingVideos } = req.body;
+    const { title, description, price, featured, existingImages, existingVideos, duration } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
     const package = await Package.findById(req.params.id);
@@ -161,6 +162,7 @@ router.put('/:id', auth, upload.fields([
     await deleteFiles([...imagesToDelete, ...videosToDelete]);
 
     package.title = title || package.title;
+    package.duration = duration || package.duration;
     package.description = description || package.description;
     package.price = price ? parseFloat(price) : package.price;
     package.featured = featured !== undefined ? featured === 'true' : package.featured;

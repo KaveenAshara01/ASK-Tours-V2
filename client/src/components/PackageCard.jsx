@@ -41,7 +41,10 @@ function PackageCard({ package: pkg }) {
           className="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none flex-grow"
           dangerouslySetInnerHTML={{ __html: pkg.description }}
         />
-        <div className="flex items-center justify-center mt-auto pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+          <span className="text-2xl font-bold text-primary-600">
+            {pkg.duration}
+          </span>
           <Link
             to={`/package/${pkg._id}`}
             className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg transition-colors font-semibold"

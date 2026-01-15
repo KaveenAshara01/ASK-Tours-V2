@@ -58,7 +58,7 @@ function PackageList({ packages, onEdit, onDelete }) {
 
                 <div className="mt-auto pt-4 border-t border-gray-100">
                   <div className="flex justify-between items-center mb-4">
-                    <p className="text-2xl font-bold text-primary-600">{formatPrice(pkg.price)}</p>
+                    <p className="text-xl font-bold text-primary-600">{pkg.duration}</p>
                   </div>
 
                   <div className="flex gap-2">
