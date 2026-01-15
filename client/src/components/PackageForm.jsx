@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
     title: '',
+    duration: '',
     description: '',
     featured: false,
   });
@@ -39,6 +40,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
     if (pkg) {
       setFormData({
         title: pkg.title || '',
+        duration: pkg.duration || '',
         description: pkg.description || '',
         featured: pkg.featured || false,
       });
@@ -138,6 +140,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       const token = localStorage.getItem('adminToken');
       const data = new FormData();
       data.append('title', formData.title);
+      data.append('duration', formData.duration);
       data.append('description', formData.description);
       data.append('featured', formData.featured);
       data.append('days', JSON.stringify(days));
@@ -212,6 +215,20 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
             onChange={handleChange}
             className="input-field"
             required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Duration
+          </label>
+          <input
+            type="text"
+            name="duration"
+            value={formData.duration}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="e.g. 5 Days / 4 Nights"
           />
         </div>
 
@@ -403,17 +420,10 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
                     {existingImages.map((img, index) => (
                       <div key={index} className="relative group">
                         <img
-                          src={`http://localhost:5000${img}`}
+                          src={img.startsWith('http') ? img : `http://localhost:5000${img}`}
                           alt={`Existing ${index + 1}`}
                           className="w-24 h-24 object-cover rounded border border-gray-300"
                         />
-                        <button
-                          type="button"
-                          onClick={() => removeExistingImage(index)}
-                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                        >
-                          ×
-                        </button>
                       </div>
                     ))}
                   </div>
@@ -428,7 +438,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
                     {existingVideos.map((vid, index) => (
                       <div key={index} className="relative group">
                         <video
-                          src={`http://localhost:5000${vid}`}
+                          src={vid.startsWith('http') ? vid : `http://localhost:5000${vid}`}
                           className="w-24 h-24 object-cover rounded border border-gray-300"
                           muted
                         />

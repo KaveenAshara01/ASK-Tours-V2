@@ -97,7 +97,7 @@ function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick, a
       <div className="relative w-full h-full" onClick={onImageClick ? (e) => onImageClick(e) : undefined}>
         {allMedia[currentIndex].type === 'image' ? (
           <img
-            src={`${baseUrl}${allMedia[currentIndex].url}`}
+            src={allMedia[currentIndex].url.startsWith('http') ? allMedia[currentIndex].url : `${baseUrl}${allMedia[currentIndex].url}`}
             alt={`Slide ${currentIndex + 1}`}
             className="w-full h-full object-cover cursor-pointer"
             onError={(e) => {
@@ -106,7 +106,7 @@ function MediaCarousel({ images = [], videos = [], baseUrl = '', onImageClick, a
           />
         ) : (
           <video
-            src={`${baseUrl}${allMedia[currentIndex].url}`}
+            src={allMedia[currentIndex].url.startsWith('http') ? allMedia[currentIndex].url : `${baseUrl}${allMedia[currentIndex].url}`}
             className="w-full h-full object-cover cursor-pointer"
             controls
             playsInline
