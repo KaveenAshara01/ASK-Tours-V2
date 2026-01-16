@@ -45,7 +45,7 @@ function Hero() {
           Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">Sri Lanka</span>
         </h1>
         <p className="text-lg md:text-2xl mb-10 text-white/90 max-w-3xl mx-auto animate-fade-in-up leading-relaxed" style={{ animationDelay: '0.2s' }}>
-          Experience the ultimate island getaway with ASK Tours. From pristine beaches and ancient cities to thrilling wildlife safaris, we craft the perfect holiday for you.
+          Experience the ultimate island getaway with ASK Travels. From pristine beaches and ancient cities to thrilling wildlife safaris, we craft the perfect holiday for you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up w-full max-w-md mx-auto sm:max-w-none" style={{ animationDelay: '0.4s' }}>
           <a

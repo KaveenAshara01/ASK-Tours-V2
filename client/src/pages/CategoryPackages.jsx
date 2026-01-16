@@ -106,7 +106,7 @@ function CategoryPackages() {
                                 <h3 className="text-xl font-medium text-gray-900 mb-2">No packages found</h3>
                                 <p className="text-gray-500 mb-6">We don't have any packages in this category yet.</p>
                                 <Link to="/" className="btn-primary">
-                                    Explore other tours
+                                    Explore other travels
                                 </Link>
                             </div>
                         )}
@@ -118,7 +118,7 @@ function CategoryPackages() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Flexible & Personalized Tours</h3>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Flexible & Personalized Travels</h3>
                             <p className="text-gray-600 leading-relaxed">
                                 We operate across all the budget ranges. accommodations and activities can be fully customized to align with your personal preferences and needs.
                             </p>

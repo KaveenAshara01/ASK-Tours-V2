@@ -38,8 +38,8 @@ function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       <SEO
         title="Home"
-        description="Welcome to ASK Tours, your premier travel agency in Sri Lanka. Explore our wide range of tour packages, from wildlife safaris to cultural tours."
-        keywords="sri lanka travel agency, tour packages, wildlife safari, cultural tours, ask tours, holidays in sri lanka"
+        description="Welcome to ASK Travels, your premier travel agency in Sri Lanka. Explore our wide range of travel packages, from wildlife safaris to cultural travels."
+        keywords="sri lanka travel agency, travel packages, wildlife safari, cultural travels, ask travels, holidays in sri lanka"
       />
       <Header />
       <Hero />

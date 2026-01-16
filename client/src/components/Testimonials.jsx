@@ -33,7 +33,7 @@ function Testimonials() {
             role: "Nature Explorer",
             location: "Germany",
             image: "/images/testimonials/hans.png",
-            content: "A truly authentic experience. The cultural tours mixed with the wildlife adventures gave us a complete picture of this wonderful island.",
+            content: "A truly authentic experience. The cultural travels mixed with the wildlife adventures gave us a complete picture of this wonderful island.",
             rating: 4
         },
         {
