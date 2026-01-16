@@ -2,13 +2,13 @@ export default function Logo({ className = "h-10", color = "currentColor" }) {
 
     return (
         <svg
-            viewBox="0 0 300 60"
+            viewBox="0 0 360 60"
             className={className}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-labelledby="logoTitle"
         >
-            <title id="logoTitle">ASK Tours Logo</title>
+            <title id="logoTitle">ASK Travels Logo</title>
             <defs>
                 <mask id="stripe-mask">
                     <rect x="0" y="0" width="100%" height="100%" fill="white" />
@@ -36,17 +36,19 @@ export default function Logo({ className = "h-10", color = "currentColor" }) {
                 ASK
             </text>
 
-            {/* "Tours" solid */}
+            {/* "Travels" solid - Smaller, elegant style */}
             <text
                 x="125"
                 y="45"
                 fontFamily="sans-serif"
-                fontWeight="700"
+                fontWeight="600"
                 fontSize="50"
+                fontStyle="italic"
                 fill={color}
                 letterSpacing="1"
+                style={{ textTransform: 'uppercase' }}
             >
-                Tours
+                Travels
             </text>
         </svg>
     );

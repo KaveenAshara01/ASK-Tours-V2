@@ -9,8 +9,8 @@ function About() {
         <div className="min-h-screen bg-gray-50">
             <SEO
                 title="About Us"
-                description="Learn more about ASK Tours. We are a premier travel agency in Sri Lanka, offering tailor-made tours, wildlife safaris, and cultural experiences."
-                keywords="about ask tours, travel agency sri lanka, tour operator, sri lanka holidays, wildlife safaris"
+                description="Learn more about ASK Travels. We are a premier travel agency in Sri Lanka, offering tailor-made travels, wildlife safaris, and cultural experiences."
+                keywords="about ask travels, travel agency sri lanka, travel operator, sri lanka holidays, wildlife safaris"
             />
             <Header />
 
@@ -31,7 +31,7 @@ function About() {
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60"></div>
                 <div className="relative z-10 text-center px-4 animate-fade-in-up">
-                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">About ASK Tours</h1>
+                    <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">About ASK Travels</h1>
                     <p className="text-xl text-white/90 max-w-2xl mx-auto">
                         Your gateway to the wonders of Sri Lanka
                     </p>
@@ -49,7 +49,7 @@ function About() {
                         <div className="prose prose-lg mx-auto text-gray-600">
                             <p className="mb-6 text-lg leading-relaxed text-center">
                                 Founded with a passion for sharing the beauty of our island,
-                                ASK Tours has grown into a full-service travel agency dedicated to creating unforgettable Sri Lankan experiences.
+                                ASK Travels has grown into a full-service travel agency dedicated to creating unforgettable Sri Lankan experiences.
                                 We specialize in everything from thrill-seeking wildlife safaris to serene cultural immersions.
                             </p>
                             <p className="text-lg leading-relaxed text-center">

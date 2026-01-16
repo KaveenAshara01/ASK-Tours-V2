@@ -33,7 +33,7 @@ function Packages() {
         <div className="bg-gray-50 min-h-screen">
             <SEO
                 title="Our Packages"
-                description="Explore our wide range of tour categories. Choose from beach holidays, cultural tours, wildlife safaris, and more."
+                description="Explore our wide range of travel categories. Choose from beach holidays, cultural travels, wildlife safaris, and more."
                 keywords="sri lanka tour categories, holiday packages, travel categories"
             />
             <Header />

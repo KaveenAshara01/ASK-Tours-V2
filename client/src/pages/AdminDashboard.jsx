@@ -80,7 +80,7 @@ function AdminDashboard() {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justifyContent-between items-center">
           <div className="flex justify-between items-center w-full">
-            <h1 className="text-3xl font-bold text-gray-900">ASK Tours Dashboard</h1>
+            <h1 className="text-3xl font-bold text-gray-900">ASK Travels Dashboard</h1>
             <div className="flex gap-4 items-center">
               <a
                 href="/"
