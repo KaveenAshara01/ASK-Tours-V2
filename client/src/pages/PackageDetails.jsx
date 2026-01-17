@@ -7,12 +7,20 @@ import MediaCarousel from '../components/MediaCarousel';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Zoom } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/zoom';
+
 function PackageDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [pkg, setPkg] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isGalleryOpen, setIsGalleryOpen] = useState(false); // State for Gallery Modal
 
     useEffect(() => {
         const fetchPackage = async () => {
@@ -63,6 +71,7 @@ function PackageDetails() {
             ? [pkg.image]
             : [];
     const videos = pkg.videos || [];
+    const hasMedia = images.length > 0 || videos.length > 0;
 
     return (
         <div className="min-h-screen bg-white flex flex-col">
@@ -75,21 +84,19 @@ function PackageDetails() {
 
             <div className="flex-grow pb-20">
                 {/* Hero Section / Media Carousel */}
-                <div className="relative h-[50vh] md:h-[70vh] bg-black">
+                <div className="relative h-[50vh] md:h-[70vh] bg-black group">
                     <MediaCarousel
                         images={images}
                         videos={videos}
-                        className="h-full w-full object-cover opacity-80"
+                        className="h-full w-full object-cover opacity-80 transition-opacity duration-500 hover:opacity-100" // Interactive Effect
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16 text-white max-w-7xl mx-auto">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16 text-white max-w-7xl mx-auto pointer-events-none">
                         {pkg.featured && (
-                            <span className="bg-yellow-500 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3 md:mb-4 inline-block">
+                            <span className="bg-yellow-500 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3 md:mb-4 inline-block shadow-md">
                                 Featured Experience
                             </span>
                         )}
-                        <h1 className="text-3xl md:text-6xl font-extrabold mb-2 md:mb-4 leading-tight shadow-sm">
+                        <h1 className="text-3xl md:text-6xl font-extrabold mb-2 md:mb-4 leading-tight shadow-sm drop-shadow-lg">
                             {pkg.title}
                         </h1>
 
@@ -104,9 +111,23 @@ function PackageDetails() {
 
                             {/* Overview Card */}
                             <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">
-                                    Overview
-                                </h2>
+                                <div className="flex justify-between items-center border-b border-gray-100 pb-4 mb-6">
+                                    <h2 className="text-2xl font-bold text-gray-900">
+                                        Overview
+                                    </h2>
+                                    {hasMedia && (
+                                        <button
+                                            onClick={() => setIsGalleryOpen(true)}
+                                            className="flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition-colors bg-primary-50 px-4 py-2 rounded-lg hover:bg-primary-100"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span className="hidden sm:inline">View Photos ({images.length + videos.length})</span>
+                                            <span className="sm:hidden">Photos ({images.length + videos.length})</span>
+                                        </button>
+                                    )}
+                                </div>
                                 <div className="prose prose-lg text-gray-600 max-w-none">
                                     <div
                                         className="prose prose-lg prose-slate font-sans text-gray-600 max-w-none [&>p]:mb-4"
@@ -187,6 +208,53 @@ function PackageDetails() {
                     </div>
                 </main>
             </div>
+
+            {/* FULL SCREEN GALLERY MODAL */}
+            {isGalleryOpen && (
+                <div className="fixed inset-0 z-[100] bg-black bg-opacity-95 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+                    <button
+                        onClick={() => setIsGalleryOpen(false)}
+                        className="absolute top-6 right-6 text-white/50 hover:text-white z-50 p-2 rounded-full hover:bg-white/10 transition-colors"
+                    >
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <div className="w-full h-full max-w-7xl mx-auto flex items-center">
+                        <Swiper
+                            modules={[Navigation, Pagination, Zoom]}
+                            navigation
+                            pagination={{ clickable: true, type: 'fraction' }}
+                            zoom
+                            spaceBetween={30}
+                            slidesPerView={1}
+                            className="w-full h-full md:h-[80vh] rounded-lg"
+                        >
+                            {images.map((img, idx) => (
+                                <SwiperSlide key={idx} className="flex items-center justify-center bg-black">
+                                    <div className="swiper-zoom-container">
+                                        <img
+                                            src={img}
+                                            alt={`Gallery ${idx + 1}`}
+                                            className="max-h-full max-w-full object-contain"
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                            {videos.map((vid, idx) => (
+                                <SwiperSlide key={`vid-${idx}`} className="flex items-center justify-center bg-black">
+                                    <video
+                                        src={vid}
+                                        controls
+                                        className="max-h-full max-w-full"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+            )}
 
             <Footer />
         </div>

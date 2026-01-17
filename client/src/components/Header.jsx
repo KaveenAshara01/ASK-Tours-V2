@@ -47,7 +47,7 @@ function Header() {
           <div className="flex justify-between items-center transition-all duration-300">
             <Link to="/" className="flex items-center z-50" onClick={() => setIsMenuOpen(false)}>
               <Logo
-                className="h-10 md:h-14 w-auto transition-all duration-300"
+                className="h-14 md:h-20 w-auto transition-all duration-300 transform -translate-y-6 -translate-x-4"
                 color={isDarkState ? '#0e3a6c' : 'white'}
               />
             </Link>
