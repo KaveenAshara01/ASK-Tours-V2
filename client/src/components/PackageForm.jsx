@@ -415,15 +415,50 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
               {/* Existing Images */}
               {existingImages.length > 0 && (
                 <div className="mt-4">
-                  <h4 className="text-sm font-medium text-gray-700 mb-2">Existing Images:</h4>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Existing Images (Drag to Reorder):</h4>
                   <div className="flex flex-wrap gap-2">
                     {existingImages.map((img, index) => (
-                      <div key={index} className="relative group">
+                      <div
+                        key={index}
+                        className="relative group cursor-move transition-transform active:scale-95"
+                        draggable
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('text/plain', index);
+                          e.dataTransfer.effectAllowed = 'move';
+                        }}
+                        onDragOver={(e) => {
+                          e.preventDefault(); // Essential for onDrop to fire
+                          e.dataTransfer.dropEffect = 'move';
+                        }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          const sourceIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                          if (sourceIndex === index || isNaN(sourceIndex)) return;
+
+                          const newImages = [...existingImages];
+                          const [movedImage] = newImages.splice(sourceIndex, 1);
+                          newImages.splice(index, 0, movedImage);
+                          setExistingImages(newImages);
+                        }}
+                      >
                         <img
                           src={img.startsWith('http') ? img : `http://localhost:5000${img}`}
                           alt={`Existing ${index + 1}`}
-                          className="w-24 h-24 object-cover rounded border border-gray-300"
+                          className="w-24 h-24 object-cover rounded border border-gray-300 hover:border-primary-500 transition-colors"
                         />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity rounded" />
+                        <button
+                          type="button"
+                          onClick={() => removeExistingImage(index)}
+                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform scale-75 group-hover:scale-100 hover:bg-red-600 z-10"
+                          title="Delete Image"
+                        >
+                          ×
+                        </button>
+                        {/* Drag Indicator Overlay */}
+                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-[10px] text-center opacity-0 group-hover:opacity-100 pointer-events-none rounded-b">
+                          Cover: #{index + 1}
+                        </div>
                       </div>
                     ))}
                   </div>
