@@ -84,6 +84,7 @@ router.post('/', auth, upload.fields([
   try {
     const { title, description, price, featured, duration } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
+    const stops = req.body.stops ? JSON.parse(req.body.stops) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
 
     const imageFiles = req.files?.images || [];
@@ -105,7 +106,9 @@ router.post('/', auth, upload.fields([
       images,
       videos,
       featured: featured === 'true',
+      featured: featured === 'true',
       days,
+      stops,
       categories
     });
 
@@ -129,6 +132,7 @@ router.put('/:id', auth, upload.fields([
   try {
     const { title, description, price, featured, existingImages, existingVideos, duration } = req.body;
     const days = req.body.days ? JSON.parse(req.body.days) : [];
+    const stops = req.body.stops ? JSON.parse(req.body.stops) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
     const package = await Package.findById(req.params.id);
 
@@ -167,6 +171,7 @@ router.put('/:id', auth, upload.fields([
     package.price = price ? parseFloat(price) : package.price;
     package.featured = featured !== undefined ? featured === 'true' : package.featured;
     package.days = days || package.days;
+    package.stops = stops || package.stops;
     package.categories = categories || package.categories;
     package.images = images;
     package.videos = videos;
