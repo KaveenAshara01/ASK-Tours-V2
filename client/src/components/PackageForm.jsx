@@ -2,6 +2,54 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { MapContainer, TileLayer, Marker, Polyline, Popup, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix for default marker icon
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// Standalone Map Click Handler Component
+function RouteBuilderMap({ stops, onStopAdd, onMapClick, onMapMove }) {
+  useMapEvents({
+    click(e) {
+      onMapClick(e.latlng);
+    },
+    zoomend(e) {
+      onMapMove([e.target.getCenter().lat, e.target.getCenter().lng]);
+    },
+    moveend(e) {
+      onMapMove([e.target.getCenter().lat, e.target.getCenter().lng]);
+    }
+  });
+
+  return (
+    <>
+      {stops.map((stop, index) => (
+        <Marker key={stop.id || index} position={[stop.lat, stop.lng]}>
+          <Popup>{index + 1}. {stop.name}</Popup>
+        </Marker>
+      ))}
+      <Polyline
+        positions={stops.map(s => [s.lat, s.lng])}
+        color="#2563eb"
+        weight={4}
+        opacity={0.7}
+        dashArray="10, 10"
+      />
+    </>
+  );
+}
 
 function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
@@ -20,6 +68,11 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [error, setError] = useState('');
 
   const [days, setDays] = useState([]);
+  const [stops, setStops] = useState([]); // Array of { lat, lng, name, id }
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+
   const [categories, setCategories] = useState([]); // All available categories
   const [selectedCategories, setSelectedCategories] = useState([]); // Selected category IDs
 
@@ -45,6 +98,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
         featured: pkg.featured || false,
       });
       setDays(pkg.days || []);
+      setStops(pkg.stops || []);
       setExistingImages(pkg.images || []);
       setExistingVideos(pkg.videos || []);
       // Map category objects to IDs if populated, or use IDs directly
@@ -66,6 +120,75 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
     newDays[index] = { ...newDays[index], [field]: value };
     setDays(newDays);
   };
+
+  const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]); // Default: Colombo, Sri Lanka
+
+  // Search Debounce
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (searchQuery.length > 2) {
+        setIsSearching(true);
+        try {
+          const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}&countrycodes=lk&limit=10`);
+          setSearchResults(response.data);
+        } catch (err) {
+          console.error("Search failed", err);
+        } finally {
+          setIsSearching(false);
+        }
+      } else {
+        setSearchResults([]);
+      }
+    }, 500); // Reduced to 500ms for better responsiveness
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
+  const handleMapClick = async (latlng) => {
+    try {
+      // Reverse geocode to get name
+      const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`);
+      const displayName = response.data.display_name;
+      // Extract a simpler name (First part is usually specific)
+      const simpleName = displayName.split(',')[0];
+
+      const newStop = {
+        lat: latlng.lat,
+        lng: latlng.lng,
+        name: simpleName || 'Selected Location',
+        id: Date.now().toString()
+      };
+      setStops(prev => [...prev, newStop]);
+    } catch (error) {
+      console.error("Reverse geocoding failed", error);
+      // Fallback if reverse geocode fails
+      const newStop = {
+        lat: latlng.lat,
+        lng: latlng.lng,
+        name: 'Pinned Location',
+        id: Date.now().toString()
+      };
+      setStops(prev => [...prev, newStop]);
+    }
+  };
+
+  const addStop = (location) => {
+    const newStop = {
+      lat: parseFloat(location.lat),
+      lng: parseFloat(location.lon),
+      name: location.display_name.split(',')[0], // Simplified name
+      id: Date.now().toString()
+    };
+    setStops([...stops, newStop]);
+    setMapCenter([newStop.lat, newStop.lng]);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
+
+  const removeStop = (index) => {
+    setStops(stops.filter((_, i) => i !== index));
+  };
+
 
   const addDay = () => {
     setDays([...days, { dayNumber: days.length + 1, title: '', description: '' }]);
@@ -144,6 +267,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       data.append('description', formData.description);
       data.append('featured', formData.featured);
       data.append('days', JSON.stringify(days));
+      data.append('stops', JSON.stringify(stops));
       data.append('categories', JSON.stringify(selectedCategories));
 
       // Append existing media arrays
@@ -254,6 +378,94 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
           </div>
         </div>
 
+        {/* Route Builder Section */}
+        <div className="border-t border-gray-200 pt-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tour Route Map</h3>
+          <p className="text-sm text-gray-500 mb-4">Search for locations OR click explicitly on the map to add stops.</p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Map */}
+            <div className="lg:col-span-2 h-96 rounded-lg overflow-hidden border border-gray-300 z-0 relative">
+              <MapContainer
+                center={mapCenter}
+                zoom={8}
+                scrollWheelZoom={false}
+                className="h-full w-full"
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <RouteBuilderMap
+                  stops={stops}
+                  onMapClick={handleMapClick}
+                  onMapMove={setMapCenter}
+                />
+              </MapContainer>
+            </div>
+
+            {/* Controls */}
+            <div className="space-y-4">
+              {/* Search Box */}
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Add Location</label>
+                <input
+                  type="text"
+                  placeholder="Type to search (e.g. Ella)"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="input-field"
+                />
+                {isSearching && <div className="absolute right-3 top-9 text-gray-400 text-xs">Searching...</div>}
+
+                {/* Search Results Dropdown */}
+                {searchResults.length > 0 && (
+                  <ul className="absolute z-50 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto mt-1">
+                    {searchResults.map((result, idx) => (
+                      <li
+                        key={idx}
+                        onClick={() => addStop(result)}
+                        className="px-4 py-2 hover:bg-primary-50 cursor-pointer text-sm border-b last:border-b-0"
+                      >
+                        <div className="font-medium text-gray-800">{result.display_name.split(',')[0]}</div>
+                        <div className="text-xs text-gray-500 truncate">{result.display_name}</div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Stops List */}
+              <div className="bg-gray-50 rounded-lg p-4 max-h-64 overflow-y-auto">
+                <h4 className="font-medium text-gray-700 mb-2">Route Stops ({stops.length})</h4>
+                {stops.length === 0 ? (
+                  <p className="text-xs text-gray-500 italic">No stops added yet.</p>
+                ) : (
+                  <ul className="space-y-2">
+                    {stops.map((stop, index) => (
+                      <li key={stop.id || index} className="flex justify-between items-center bg-white p-2 rounded shadow-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="bg-primary-100 text-primary-700 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                            {index + 1}
+                          </span>
+                          <span className="text-sm font-medium text-gray-800">{stop.name}</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeStop(index)}
+                          className="text-red-500 hover:text-red-700 text-xs px-2"
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Categories Section */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -319,6 +531,8 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
                       placeholder="e.g., Arrival & Welcome Dinner"
                     />
                   </div>
+
+
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -559,8 +773,8 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
             Cancel
           </button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 }
 

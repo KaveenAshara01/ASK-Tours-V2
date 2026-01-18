@@ -13,6 +13,59 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/zoom';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import 'leaflet-polylinedecorator';
+
+// Fix for default marker icon
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// Polyline Decorator Component
+function PolylineDecorator({ positions }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !positions || positions.length < 2) return;
+
+        const decorators = [];
+
+        // Create a decorator for each segment to ensure one arrow per connection
+        for (let i = 0; i < positions.length - 1; i++) {
+            const segment = [positions[i], positions[i + 1]];
+            const decorator = L.polylineDecorator(segment, {
+                patterns: [
+                    {
+                        offset: '50%', // Explicitly in the middle of the segment
+                        repeat: 0,     // No repetition
+                        symbol: L.Symbol.arrowHead({
+                            pixelSize: 15, // Slightly larger for visibility since there's only one
+                            polygon: false,
+                            pathOptions: { stroke: true, weight: 3, color: '#ef4444' }
+                        })
+                    }
+                ]
+            }).addTo(map);
+            decorators.push(decorator);
+        }
+
+        return () => {
+            decorators.forEach(d => map.removeLayer(d));
+        };
+    }, [map, positions]);
+
+    return null;
+}
 
 function PackageDetails() {
     const { id } = useParams();
@@ -177,6 +230,54 @@ function PackageDetails() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* Route Map Section */}
+                            {pkg.stops && pkg.stops.length > 0 && (
+                                <div className="space-y-6">
+                                    <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+                                        <span className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center text-sm font-bold">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                            </svg>
+                                        </span>
+                                        Tour Route Map
+                                    </h2>
+                                    <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden h-[400px] z-0">
+                                        <MapContainer
+                                            center={[pkg.stops[0].lat, pkg.stops[0].lng]}
+                                            zoom={7}
+                                            scrollWheelZoom={false}
+                                            className="h-full w-full"
+                                        >
+                                            <TileLayer
+                                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                            />
+                                            {/* Markers */}
+                                            {pkg.stops.map((stop, idx) => (
+                                                <Marker key={idx} position={[stop.lat, stop.lng]}>
+                                                    <Popup>
+                                                        <div className="font-bold">{idx + 1}. {stop.name}</div>
+                                                    </Popup>
+                                                </Marker>
+                                            ))}
+                                            {/* Route Line */}
+                                            <Polyline
+                                                positions={pkg.stops.map(s => [s.lat, s.lng])}
+                                                color="#2563eb" // Primary Blue
+                                                weight={4}
+                                                opacity={0.7}
+                                                dashArray="10, 10"  // Dashed line
+                                            />
+                                            {/* Decorative Arrows */}
+                                            <PolylineDecorator
+                                                positions={pkg.stops.map(s => [s.lat, s.lng])}
+                                            />
+                                        </MapContainer>
+                                    </div>
+                                </div>
+                            )}
+
                         </div>
 
                         {/* Sidebar / Booking Card (Placeholder for now) */}
