@@ -30,7 +30,18 @@ const packageSchema = new mongoose.Schema({
   days: [{
     dayNumber: Number,
     title: String,
-    description: String
+    description: String,
+    coordinates: {
+      lat: Number,
+      lng: Number,
+      name: String
+    }
+  }],
+  stops: [{
+    lat: Number,
+    lng: Number,
+    name: String,
+    id: String
   }],
   featured: {
     type: Boolean,
