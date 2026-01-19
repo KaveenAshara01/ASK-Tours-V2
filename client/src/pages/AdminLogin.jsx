@@ -31,7 +31,7 @@ function AdminLogin() {
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <Logo className="h-16 w-auto mx-auto mb-6" color="#0e3a6c" />
+            <Logo className="h-24 w-auto mx-auto mb-6" color="#0e3a6c" />
             <p className="text-gray-600 mt-2">Admin Dashboard Login</p>
           </div>
 

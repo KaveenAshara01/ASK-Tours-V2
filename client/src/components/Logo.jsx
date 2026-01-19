@@ -17,12 +17,12 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
     }, []);
 
     // Responsive Coordinates
-    const travelsX = isMobile ? 140 : 155; // Closer on mobile (140), Wider on desktop (155)
-    const starX = isMobile ? 410 : 425;    // Moving star to match
+    const travelsX = isMobile ? 155 : 175;
+    const taglineCenterX = isMobile ? 230 : 235;
 
     return (
         <svg
-            viewBox="-40 -40 500 130"
+            viewBox="-5 -35 520 170"
             className={className}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,9 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
                 </mask>
                 {/* 8-Point Compass Rose Star */}
                 <symbol id="star" viewBox="0 0 24 24">
-                    <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" fill={color} />
+                    {/* Luxury 'A' / Peak Symbol */}
+                    <path d="M12 2L2 22H6.5L12 10L17.5 22H22L12 2Z" fill={color} />
+                    <path d="M8 17H16V18.5H8V17Z" fill={color} />
                 </symbol>
             </defs>
 
@@ -49,15 +51,18 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
             <g transform="translate(0, 10)">
                 {/* "ASK" */}
                 <text
-                    x="20"
-                    y="45"
+                    x="15"
+                    y="55"
                     fontFamily="sans-serif"
                     fontWeight="900"
-                    fontSize="50"
+                    fontSize="60"
                     fontStyle="italic"
                     fill={color}
+                    stroke={color}
+                    strokeWidth="2"
                     mask="url(#stripe-mask)"
                     letterSpacing="2"
+                    transform={isMobile ? "skewX(-10)" : ""}
                 >
                     ASK
                 </text>
@@ -65,10 +70,10 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
                 {/* "TRAVELS" */}
                 <text
                     x={travelsX}
-                    y="45"
+                    y="55"
                     fontFamily="'Montserrat', sans-serif"
                     fontWeight="700"
-                    fontSize="50"
+                    fontSize="60"
                     fontStyle="italic"
                     fill={color}
                     letterSpacing="2"
@@ -77,20 +82,17 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
                     Travels
                 </text>
 
-                {/* SINGLE STAR - Trademark Style (Above 'S') */}
-                <use href="#star" x="0" y="0" width="20" height="20" transform={`translate(${starX}, 5)`} />
-
                 {/* TAGLINE */}
                 <text
-                    x="225"
-                    y="75"
+                    x={taglineCenterX}
+                    y="90"
                     fontFamily="'Montserrat', sans-serif"
-                    fontWeight="500"
-                    fontSize="18"
+                    fontWeight="600"
+                    fontSize="22"
                     fill={color}
                     letterSpacing="6"
                     textAnchor="middle"
-                    style={{ textTransform: 'uppercase', opacity: 0.8 }}
+                    style={{ textTransform: 'uppercase', opacity: 0.9 }}
                 >
                     Premier Travel Partner
                 </text>
