@@ -8,7 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand & Description */}
           <div className="space-y-4">
-            <Logo className="h-12 w-auto" color="white" />
+            <Logo className="h-24 w-auto -ml-2" color="white" />
             <p className="text-gray-400 leading-relaxed">
               Your trusted travel partner in Sri Lanka. We craft personalized journeys, from thrilling safaris to serene beach escapes.
             </p>
