@@ -17,6 +17,8 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet-polylinedecorator';
+import Modal from '../components/Modal';
+import InquiryForm from '../components/InquiryForm';
 
 // Fix for default marker icon
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -74,6 +76,7 @@ function PackageDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isGalleryOpen, setIsGalleryOpen] = useState(false); // State for Gallery Modal
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for Inquiry Modal
 
     useEffect(() => {
         const fetchPackage = async () => {
@@ -288,10 +291,25 @@ function PackageDetails() {
                                     <p className="text-gray-600 mb-6">
                                         Ready for an unforgettable adventure? Contact us to book this package.
                                     </p>
-                                    <button className="w-full btn-primary text-lg py-4 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                                    <button
+                                        onClick={() => setIsModalOpen(true)}
+                                        className="w-full btn-primary text-lg py-4 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+                                    >
                                         Inquire Now
                                     </button>
                                 </div>
+
+                                <Modal
+                                    isOpen={isModalOpen}
+                                    onClose={() => setIsModalOpen(false)}
+                                    title={`Inquiry for ${pkg.title}`}
+                                    maxWidth="max-w-4xl"
+                                >
+                                    <InquiryForm
+                                        initialNote={`I'm interested in the "${pkg.title}" package.`}
+                                        embedded={true}
+                                    />
+                                </Modal>
 
                                 {/* Quick Info */}
                                 <div className="bg-primary-50 rounded-2xl p-6 border border-primary-100">

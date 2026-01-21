@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.asktravels.com/sitemap.xml
+Sitemap: https://www.ask-travels.com/sitemap.xml

@@ -20,7 +20,7 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gray-900 text-white min-h-[90vh] md:min-h-[720px] flex items-center">
+    <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center">
       {/* Background Images - Carousel */}
       {heroImages.map((img, index) => (
         <div
