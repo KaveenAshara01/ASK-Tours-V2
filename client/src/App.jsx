@@ -9,7 +9,6 @@ import PackageDetails from './pages/PackageDetails';
 import CategoryPackages from './pages/CategoryPackages';
 import AdminLogin from './pages/AdminLogin';
 
-import FloatingWhatsApp from './components/FloatingWhatsApp';
 import ScrollToTop from './components/ScrollToTop';
 import LanguageSuggester from './components/LanguageSuggester';
 
@@ -19,7 +18,6 @@ function App() {
       <Router>
         <LanguageSuggester />
         <ScrollToTop />
-        <FloatingWhatsApp />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -36,4 +34,3 @@ function App() {
 }
 
 export default App;
-

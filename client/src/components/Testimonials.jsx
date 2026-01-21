@@ -63,7 +63,7 @@ function Testimonials() {
                 <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
 
                 <div className="flex overflow-hidden">
-                    <div className="flex animate-marquee whitespace-nowrap gap-8 py-4">
+                    <div className="flex animate-marquee-scroll whitespace-nowrap gap-8 py-4">
                         {[...testimonials, ...testimonials].map((testimonial, index) => (
                             <div
                                 key={`${testimonial.id}-${index}`}
