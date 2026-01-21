@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+// Try to load .env from the server directory first, then fallback to root
 require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 
@@ -32,6 +34,7 @@ app.use('/api/packages', require('./routes/packages'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
+app.use('/api/inquiries', require('./routes/inquiryRoutes'));
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {

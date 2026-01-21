@@ -14,6 +14,7 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import Testimonials from '../components/Testimonials';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
+import InquiryForm from '../components/InquiryForm';
 
 function Home() {
   const [categories, setCategories] = useState([]);
@@ -54,11 +55,42 @@ function Home() {
         </defs>
       </svg>
 
-      {/* Wrapper for Drop Shadow (since clip-path clips normal box-shadow) */}
-      <div className="relative mt-0 md:-mt-36 z-20 filter drop-shadow-2xl">
+      {/* Brand Tape Transition Style */}
+      <div className="relative z-30">
+
+        {/* Tape 1 (Background) */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden transform -rotate-1 origin-top-left">
+          <div className="bg-cyan-400 py-3 shadow-lg">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {[...Array(20)].map((_, i) => (
+                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-sm">
+                  ASK TRAVELS • DISCOVER SRI LANKA •
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Tape 2 (Foreground) */}
+        <div className="absolute -top-4 left-0 w-full overflow-hidden transform rotate-1 origin-top-right">
+          <div className="bg-primary-600 py-3 shadow-xl">
+            <div className="flex animate-marquee-reverse whitespace-nowrap">
+              {[...Array(20)].map((_, i) => (
+                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-lg">
+                  ASK TRAVELS • UNFORGETTABLE JOURNEYS •
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="relative z-20">
+
         <section
           id="packages"
-          className="relative pt-24 pb-12 md:pb-20 px-4 overflow-hidden rounded-t-[3rem] md:rounded-none clip-wave-md"
+          className="relative pt-20 pb-12 md:pb-20 px-4 overflow-hidden bg-white"
         >
           {/* Background Overlay */}
           <div
@@ -142,11 +174,27 @@ function Home() {
                 </div>
               </>
             )}
+
           </div>
           <WhyChooseUs />
         </section>
       </div>
 
+      {/* Brand Tape Divider (Middle) */}
+      <div className="relative z-30 py-12 bg-white overflow-hidden">
+        {/* Tape 1 */}
+        <div className="absolute top-1/2 left-0 w-full transform -translate-y-1/2 rotate-2 scale-110">
+          <div className="bg-gray-900 py-4 shadow-xl border-y-2 border-yellow-400">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {[...Array(15)].map((_, i) => (
+                <span key={i} className="mx-6 text-yellow-400 font-bold uppercase tracking-[0.2em] text-xl">
+                  ★ 100% TAILOR-MADE HOLIDAYS ★ ASK TRAVELS ★
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Testimonials />
       <ContactSection />
@@ -156,4 +204,3 @@ function Home() {
 }
 
 export default Home;
-
