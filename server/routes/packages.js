@@ -78,7 +78,7 @@ router.get('/:id', async (req, res) => {
 
 // Create package (admin only)
 router.post('/', auth, upload.fields([
-  { name: 'images', maxCount: 20 },
+  { name: 'images', maxCount: 30 },
   { name: 'videos', maxCount: 10 }
 ]), async (req, res) => {
   try {
@@ -126,7 +126,7 @@ router.post('/', auth, upload.fields([
 
 // Update package (admin only)
 router.put('/:id', auth, upload.fields([
-  { name: 'images', maxCount: 20 },
+  { name: 'images', maxCount: 30 },
   { name: 'videos', maxCount: 10 }
 ]), async (req, res) => {
   try {
