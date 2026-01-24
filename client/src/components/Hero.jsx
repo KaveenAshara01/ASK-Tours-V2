@@ -11,28 +11,45 @@ const heroImages = [
 
 function Hero() {
   const [currentImage, setCurrentImage] = useState(0);
+  const [prevImage, setPrevImage] = useState(-1);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
+      setCurrentImage((prev) => {
+        setPrevImage(prev);
+        return (prev + 1) % heroImages.length;
+      });
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
+  const getAnimationClass = (index) => {
+    // Deterministic animation based on index
+    const animMap = ['animate-ken-burns-1', 'animate-ken-burns-2', 'animate-ken-burns-3', 'animate-ken-burns-4'];
+    return animMap[index % animMap.length];
+  };
+
   return (
     <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center">
       {/* Background Images - Carousel */}
-      {heroImages.map((img, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${index === currentImage ? 'opacity-100' : 'opacity-0'
-            }`}
-          style={{ backgroundImage: `url('${img}')` }}
-          aria-hidden="true"
-        >
+      {heroImages.map((img, index) => {
+        const isActive = index === currentImage;
+        const isPrev = index === prevImage;
+        const shouldAnimate = isActive || isPrev;
 
-        </div>
-      ))}
+        return (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-all duration-[2000ms] ease-in-out ${isActive ? 'opacity-100 z-10 blur-0 scale-100' : 'opacity-0 z-0 blur-xl scale-110'}`}
+            aria-hidden="true"
+          >
+            <div
+              className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${shouldAnimate ? getAnimationClass(index) : ''}`}
+              style={{ backgroundImage: `url('${img}')` }}
+            ></div>
+          </div>
+        );
+      })}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-0"></div>
