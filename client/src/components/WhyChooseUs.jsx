@@ -35,34 +35,37 @@ function WhyChooseUs() {
     ];
 
     return (
-        <section className="py-12 md:py-20 px-4 bg-transparent relative z-10 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12 md:mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-                        {t('why_choose_us.title', 'Why Choose Us')}
-                    </h2>
-                    <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                        {t('why_choose_us.subtitle', 'Experience Sri Lanka with the best in the business')}
-                    </p>
-                </div>
+        <section className="py-24 px-4 bg-white border-t border-gray-100">
+            <div className="max-w-[1920px] mx-auto px-4 md:px-12">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+                    <div className="md:col-span-1">
+                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 font-sans uppercase tracking-tighter leading-none">
+                            {t('why_choose_us.title', 'Why Choose Us')}
+                        </h2>
+                        <div className="w-16 h-2 bg-gray-900 mb-6"></div>
+                        <p className="text-lg text-gray-500 font-medium leading-relaxed">
+                            {t('why_choose_us.subtitle', 'Experience Sri Lanka with the best in the business')}
+                        </p>
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {features.map((feature, index) => (
-                        <div
-                            key={index}
-                            className="bg-gray-50 rounded-2xl p-8 flex flex-col items-center text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-                        >
-                            <div className="bg-white p-4 rounded-full mb-6 shadow-sm text-primary-600">
-                                {feature.icon}
+                    <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {features.map((feature, index) => (
+                            <div
+                                key={index}
+                                className="group p-8 bg-gray-50 hover:bg-gray-900 transition-colors duration-500"
+                            >
+                                <div className="mb-6 text-gray-900 group-hover:text-white transition-colors duration-500 scale-100 group-hover:scale-110 transform origin-left">
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-900 group-hover:text-white mb-3 uppercase tracking-wider transition-colors duration-500">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-gray-500 group-hover:text-gray-400 leading-relaxed text-sm font-medium transition-colors duration-500">
+                                    {feature.description}
+                                </p>
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                                {feature.title}
-                            </h3>
-                            <p className="text-gray-600 leading-relaxed">
-                                {feature.description}
-                            </p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
