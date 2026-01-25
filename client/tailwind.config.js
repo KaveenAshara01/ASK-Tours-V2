@@ -21,6 +21,9 @@ export default {
           950: '#082f49',
         },
       },
+      transitionTimingFunction: {
+        'cinematic': 'cubic-bezier(0.65, 0, 0.35, 1)',
+      },
       animation: {
         'bounce-in': 'bounceIn 0.5s cubic-bezier(0.8, 0, 1, 1)',
         'fade-in': 'fadeIn 0.5s ease-out forwards',

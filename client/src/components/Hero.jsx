@@ -30,7 +30,7 @@ function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center">
+    <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center pb-20">
       {/* Background Images - Carousel */}
       {heroImages.map((img, index) => {
         const isActive = index === currentImage;
@@ -40,7 +40,7 @@ function Hero() {
         return (
           <div
             key={index}
-            className={`absolute inset-0 transition-all duration-[2000ms] ease-in-out ${isActive ? 'opacity-100 z-10 blur-0 scale-100' : 'opacity-0 z-0 blur-xl scale-110'}`}
+            className={`absolute inset-0 transition-all duration-[2500ms] ease-cinematic ${isActive ? 'opacity-100 scale-100 z-20' : isPrev ? 'opacity-0 scale-125 z-10' : 'opacity-0 scale-125 z-0'}`}
             aria-hidden="true"
           >
             <div
@@ -52,9 +52,9 @@ function Hero() {
       })}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-0"></div>
+      <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-20"></div>
 
-      <div className="relative max-w-7xl mx-auto text-center z-10 px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-0">
+      <div className="relative max-w-7xl mx-auto text-center z-30 px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-0">
         <span className="block text-primary-300 font-bold tracking-widest uppercase mb-4 text-sm md:text-base animate-fade-in">
           Your Journey Begins Here
         </span>
@@ -88,7 +88,7 @@ function Hero() {
       </div>
 
       {/* Scroll indicator for mobile */}
-      <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/90 z-30 drop-shadow-lg">
+      <div className="absolute bottom-28 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/90 z-30 drop-shadow-lg">
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>

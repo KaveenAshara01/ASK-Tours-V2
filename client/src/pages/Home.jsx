@@ -56,7 +56,7 @@ function Home() {
       </svg>
 
       {/* Brand Tape Transition Style */}
-      <div className="relative z-30">
+      <div className="relative z-30 -mt-8 md:-mt-12">
 
         {/* Tape 1 (Background) */}
         <div className="absolute top-0 left-0 w-full overflow-hidden transform -rotate-1 origin-top-left">
