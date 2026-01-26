@@ -30,7 +30,7 @@ function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center">
+    <section className="relative overflow-hidden bg-gray-900 text-white h-screen flex items-center pb-20">
       {/* Background Images - Carousel */}
       {heroImages.map((img, index) => {
         const isActive = index === currentImage;
@@ -40,7 +40,7 @@ function Hero() {
         return (
           <div
             key={index}
-            className={`absolute inset-0 transition-all duration-[2000ms] ease-in-out ${isActive ? 'opacity-100 z-10 blur-0 scale-100' : 'opacity-0 z-0 blur-xl scale-110'}`}
+            className={`absolute inset-0 transition-all duration-[2500ms] ease-cinematic ${isActive ? 'opacity-100 scale-100 z-20' : isPrev ? 'opacity-0 scale-125 z-10' : 'opacity-0 scale-125 z-0'}`}
             aria-hidden="true"
           >
             <div
@@ -51,20 +51,26 @@ function Hero() {
         );
       })}
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/50 via-transparent to-black/70 z-0"></div>
+      {/* Overlay - Cleaner, less "gradient-heavy" for editorial look */}
+      <div className="absolute inset-0 bg-black/20 z-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 z-20"></div>
 
-      <div className="relative max-w-7xl mx-auto text-center z-10 px-4 sm:px-6 lg:px-8 w-full mt-16 md:mt-0">
-        <span className="block text-primary-300 font-bold tracking-widest uppercase mb-4 text-sm md:text-base animate-fade-in">
+      <div className="relative max-w-[1920px] mx-auto text-center z-30 px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center justify-center h-full pt-24 md:pt-40">
+        <span className="block text-white font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm animate-fade-in border-b-2 border-white pb-2">
           Your Journey Begins Here
         </span>
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in drop-shadow-xl leading-tight">
-          Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">Sri Lanka</span>
+        <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-black mb-4 animate-fade-in drop-shadow-2xl leading-[0.8] flex flex-col items-center uppercase tracking-tighter">
+          <span className="text-white block mb-0 drop-shadow-lg">Discover</span>
+          <span className="bg-[url('https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Sri_Lanka.svg')] bg-cover bg-center bg-clip-text text-transparent bg-[length:200%_auto] animate-bg-pan filter brightness-125 saturate-150 [-webkit-text-stroke:1px_rgba(255,255,255,0.5)] md:[-webkit-text-stroke:2px_rgba(255,255,255,0.5)] drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">
+            Sri Lanka
+          </span>
         </h1>
-        <p className="text-lg md:text-2xl mb-10 text-white/90 max-w-3xl mx-auto animate-fade-in-up leading-relaxed" style={{ animationDelay: '0.2s' }}>
-          Experience the ultimate island getaway with ASK Travels. From pristine beaches and ancient cities to thrilling wildlife safaris, we craft the perfect holiday for you.
+
+        <p className="text-lg md:text-2xl mb-8 text-white/95 max-w-4xl mx-auto animate-fade-in-up leading-relaxed font-bold tracking-wide drop-shadow-xl" style={{ animationDelay: '0.2s' }}>
+          Experience the ultimate island getaway with ASK Travels. Curated journeys for the modern explorer.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up w-full max-w-md mx-auto sm:max-w-none" style={{ animationDelay: '0.4s' }}>
+
+        <div className="flex flex-col sm:flex-row gap-0 justify-center animate-fade-in-up w-full max-w-md mx-auto sm:max-w-none items-center" style={{ animationDelay: '0.4s' }}>
           <a
             href="#packages"
             onClick={(e) => {
@@ -74,27 +80,24 @@ function Hero() {
                 block: 'start'
               });
             }}
-            className="w-full sm:w-auto bg-white text-gray-900 font-bold py-4 px-8 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg transform hover:-translate-y-1"
+            className="w-full sm:w-auto bg-white text-black font-black py-4 px-8 hover:bg-gray-200 transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-widest text-xs md:text-sm"
           >
             Explore Packages
           </a>
           <a
             href="#contact"
-            className="w-full sm:w-auto bg-primary-600/90 text-white font-bold py-4 px-8 rounded-full hover:bg-primary-700/90 transition-all duration-300 border border-primary-500/50 backdrop-blur-sm shadow-lg transform hover:-translate-y-1"
+            className="w-full sm:w-auto bg-transparent text-white border-2 border-white font-black py-[14px] px-8 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-widest text-xs md:text-sm backdrop-blur-sm"
           >
             Start Your Journey
           </a>
         </div>
       </div>
 
-      {/* Scroll indicator for mobile */}
-      <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/90 z-30 drop-shadow-lg">
+      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 animate-bounce md:hidden text-white/90 z-30 drop-shadow-lg">
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7" />
         </svg>
       </div>
-
-
     </section>
   );
 }

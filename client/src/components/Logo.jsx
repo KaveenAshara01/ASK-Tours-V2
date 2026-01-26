@@ -42,8 +42,8 @@ export default function Logo({ className = "h-16", color = "currentColor" }) { /
                 {/* 8-Point Compass Rose Star */}
                 <symbol id="star" viewBox="0 0 24 24">
                     {/* Luxury 'A' / Peak Symbol */}
-                    <path d="M12 2L2 22H6.5L12 10L17.5 22H22L12 2Z" fill={color} />
-                    <path d="M8 17H16V18.5H8V17Z" fill={color} />
+                    <path d="M12 2L2 22H6.5L12 10L17.5 22H22L12 2Z" fill="#0ea5e9" />
+                    <path d="M8 17H16V18.5H8V17Z" fill="#0ea5e9" />
                 </symbol>
             </defs>
 

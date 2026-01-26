@@ -13,7 +13,7 @@ export default {
           200: '#bae6fd',
           300: '#7dd3fc',
           400: '#38bdf8',
-          500: '#0ea5e9',
+          500: '#0ea5e9', // Diamond / Sky Blue
           600: '#0284c7',
           700: '#0369a1',
           800: '#075985',
@@ -32,6 +32,8 @@ export default {
         'ken-burns-2': 'kenBurns2 20s ease-out forwards',
         'ken-burns-3': 'kenBurns3 25s ease-out forwards',
         'ken-burns-4': 'kenBurns4 25s ease-out forwards',
+        'wave': 'wave 3s ease-in-out infinite',
+        'bg-pan': 'bgPan 15s linear infinite alternate',
       },
       keyframes: {
         bounceIn: {
@@ -75,6 +77,14 @@ export default {
         kenBurns4: {
           '0%': { transform: 'scale(1.1) translate(-2%, -1%)' },
           '100%': { transform: 'scale(1) translate(2%, 2%)' },
+        },
+        wave: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        bgPan: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
         },
       },
     },

@@ -91,19 +91,19 @@ function Home() {
 
         <section
           id="packages"
-          className="relative pt-28 pb-24 px-0 bg-white"
+          className="relative pt-16 pb-12 px-0 bg-white"
         >
           {/* Stark Minimalist Background - No textures, just structure */}
           <div className="absolute inset-0 border-b border-gray-100"></div>
 
           <div className="relative max-w-[1920px] mx-auto z-10 px-4 md:px-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 px-4">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 px-4">
               <div className="max-w-4xl">
                 <span className="block text-gray-400 font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm">
                   The Collections
                 </span>
                 <h2 className="text-5xl md:text-8xl font-black text-gray-900 mb-0 font-sans tracking-tighter leading-[0.9] uppercase">
-                  Discover<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">Sri Lanka</span>
+                  Discover<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-600 pr-4">Sri Lanka</span>
                 </h2>
               </div>
               <div className="mt-8 md:mt-0 md:mb-4 hidden md:block">
