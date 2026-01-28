@@ -35,6 +35,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/inquiries', require('./routes/inquiryRoutes'));
+app.use('/api/activities', require('./routes/activities'));
+app.use('/api/events', require('./routes/events'));
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {

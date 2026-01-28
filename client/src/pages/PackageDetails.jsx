@@ -299,6 +299,34 @@ function PackageDetails() {
                                     </button>
                                 </div>
 
+                                {/* Included Activities/Events */}
+                                {(pkg.activities?.length > 0 || pkg.events?.length > 0) && (
+                                    <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-4">Highlights</h3>
+                                        <div className="space-y-4">
+                                            {pkg.activities?.map(act => (
+                                                <div key={act._id} className="flex gap-3 items-start p-3 bg-gray-50 rounded-lg">
+                                                    <img src={act.images?.[0] || '/images/placeholder.jpg'} alt={act.title} className="w-16 h-16 object-cover rounded-md" />
+                                                    <div>
+                                                        <h4 className="font-bold text-sm text-gray-900 leading-tight mb-1">{act.title}</h4>
+                                                        <a href={`/experiences/${act._id}`} className="text-xs text-primary-600 font-bold uppercase tracking-wider hover:underline">View Activity</a>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            {pkg.events?.map(ev => (
+                                                <div key={ev._id} className="flex gap-3 items-start p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                                                    <img src={ev.images?.[0] || '/images/placeholder.jpg'} alt={ev.title} className="w-16 h-16 object-cover rounded-md" />
+                                                    <div>
+                                                        <h4 className="font-bold text-sm text-gray-900 leading-tight mb-1">{ev.title}</h4>
+                                                        <span className="text-xs text-yellow-700 block mb-1">{new Date(ev.startDate).toLocaleDateString()}</span>
+                                                        <a href={`/events/${ev._id}`} className="text-xs text-primary-600 font-bold uppercase tracking-wider hover:underline">View Event</a>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <Modal
                                     isOpen={isModalOpen}
                                     onClose={() => setIsModalOpen(false)}
@@ -326,57 +354,59 @@ function PackageDetails() {
 
                     </div>
                 </main>
-            </div>
+            </div >
 
             {/* FULL SCREEN GALLERY MODAL */}
-            {isGalleryOpen && (
-                <div className="fixed inset-0 z-[100] bg-black bg-opacity-95 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
-                    <button
-                        onClick={() => setIsGalleryOpen(false)}
-                        className="absolute top-6 right-6 text-white/50 hover:text-white z-50 p-2 rounded-full hover:bg-white/10 transition-colors"
-                    >
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-
-                    <div className="w-full h-full max-w-7xl mx-auto flex items-center">
-                        <Swiper
-                            modules={[Navigation, Pagination, Zoom]}
-                            navigation
-                            pagination={{ clickable: true, type: 'fraction' }}
-                            zoom
-                            spaceBetween={30}
-                            slidesPerView={1}
-                            className="w-full h-full md:h-[80vh] rounded-lg"
+            {
+                isGalleryOpen && (
+                    <div className="fixed inset-0 z-[100] bg-black bg-opacity-95 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+                        <button
+                            onClick={() => setIsGalleryOpen(false)}
+                            className="absolute top-6 right-6 text-white/50 hover:text-white z-50 p-2 rounded-full hover:bg-white/10 transition-colors"
                         >
-                            {images.map((img, idx) => (
-                                <SwiperSlide key={idx} className="flex items-center justify-center bg-black">
-                                    <div className="swiper-zoom-container">
-                                        <img
-                                            src={img}
-                                            alt={`Gallery ${idx + 1}`}
-                                            className="max-h-full max-w-full object-contain"
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <div className="w-full h-full max-w-7xl mx-auto flex items-center">
+                            <Swiper
+                                modules={[Navigation, Pagination, Zoom]}
+                                navigation
+                                pagination={{ clickable: true, type: 'fraction' }}
+                                zoom
+                                spaceBetween={30}
+                                slidesPerView={1}
+                                className="w-full h-full md:h-[80vh] rounded-lg"
+                            >
+                                {images.map((img, idx) => (
+                                    <SwiperSlide key={idx} className="flex items-center justify-center bg-black">
+                                        <div className="swiper-zoom-container">
+                                            <img
+                                                src={img}
+                                                alt={`Gallery ${idx + 1}`}
+                                                className="max-h-full max-w-full object-contain"
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                                {videos.map((vid, idx) => (
+                                    <SwiperSlide key={`vid-${idx}`} className="flex items-center justify-center bg-black">
+                                        <video
+                                            src={vid}
+                                            controls
+                                            className="max-h-full max-w-full"
                                         />
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                            {videos.map((vid, idx) => (
-                                <SwiperSlide key={`vid-${idx}`} className="flex items-center justify-center bg-black">
-                                    <video
-                                        src={vid}
-                                        controls
-                                        className="max-h-full max-w-full"
-                                    />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             <Footer />
-        </div>
+        </div >
     );
 }
 

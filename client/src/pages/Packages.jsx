@@ -40,39 +40,42 @@ function Packages() {
             />
             <Header />
 
-            {/* Editorial Hero Section */}
-            <div className="relative h-[75vh] bg-gray-900 flex flex-col justify-center items-center overflow-hidden">
+            {/* Premium Hero Section */}
+            <div className="relative h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden bg-gray-900">
                 <div
-                    className="absolute inset-0 bg-[url('/images/safari_hero.jpg')] bg-cover bg-center bg-no-repeat opacity-50"
-                    aria-hidden="true"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+                    style={{ backgroundImage: "url('/images/safari_hero.jpg')" }}
                 ></div>
-                <div className="absolute inset-0 bg-black/40"></div>
+                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
 
-                <div className="relative z-10 text-center px-4 w-full max-w-[1920px] mx-auto pt-20">
-                    <span className="block text-white font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm animate-fade-in border-b-2 border-white/50 w-fit mx-auto pb-2">
+                {/* Bottom Fade to blend with content */}
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
+
+                <div className="relative z-20 text-center px-6 max-w-[1920px] mx-auto">
+                    <span className="block text-white font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm animate-fade-in">
                         Curated Collections
                     </span>
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-2 uppercase tracking-tighter leading-[0.9] flex flex-col items-center">
-                        <span className="block drop-shadow-lg">Discover</span>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white md:ml-24 pr-4">
+                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8">
+                        Discover<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white">
                             Journeys
                         </span>
                     </h1>
+                    <div className="w-24 h-1 bg-secondary-500 mx-auto rounded-full"></div>
                 </div>
             </div>
 
-            {/* Categories Grid - Stark & Clean */}
-            <section className="relative py-12 px-4 bg-white">
-                <div className="max-w-[1920px] mx-auto z-10">
-                    <div className="flex flex-col md:flex-row items-end justify-between mb-16 px-4 border-b border-gray-100 pb-8">
-                        <div>
-                            <h2 className="text-4xl font-black text-black uppercase tracking-tighter">
-                                Select Your Path
-                            </h2>
-                            <p className="text-gray-500 font-medium mt-2 max-w-xl">
-                                Browse our travel categories below to find detailed itineraries and packages tailored to your journey.
-                            </p>
-                        </div>
+            {/* Categories Grid - Editorial Wall */}
+            <section className="relative py-20 px-4 md:px-8 bg-white">
+                <div className="max-w-[1920px] mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-5xl font-black text-black uppercase tracking-tighter mb-4">
+                            Select Your Path
+                        </h2>
+                        <p className="text-gray-500 text-lg font-medium max-w-2xl mx-auto">
+                            Browse our exclusively curated travel collections designed for unique experiences.
+                        </p>
                     </div>
 
                     {loading ? (
@@ -81,15 +84,15 @@ function Packages() {
                         </div>
                     ) : categories.length === 0 ? (
                         <div className="text-center py-20">
-                            <p className="text-gray-600 text-xl">No categories available at the moment.</p>
+                            <p className="text-gray-600 text-xl font-light">No collections available.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                             {categories.map((cat, index) => (
                                 <div
                                     key={cat._id}
                                     className="animate-fade-in-up"
-                                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }}
+                                    style={{ animationDelay: `${index * 0.1}s` }}
                                 >
                                     <CategoryCard category={cat} />
                                 </div>
@@ -98,19 +101,24 @@ function Packages() {
                     )}
 
                     {/* Custom Inquiry CTA */}
-                    <div className="mt-24 text-center border-t border-gray-100 pt-16">
-                        <h3 className="text-2xl font-black text-black uppercase tracking-tight mb-4">
-                            Need a Tailor-Made Experience?
-                        </h3>
-                        <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
-                            We specialize in crafting unique journeys. If you don't see exactly what you're looking for, let us design a custom package just for you.
-                        </p>
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className="inline-block bg-primary-600 text-white font-black uppercase tracking-[0.2em] py-4 px-12 hover:bg-black transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                        >
-                            Inquire Now
-                        </button>
+                    <div className="mt-24 bg-gray-50 rounded-3xl p-12 text-center relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+
+                        <div className="relative z-10">
+                            <h3 className="text-3xl font-black text-black uppercase tracking-tight mb-6">
+                                Need a Tailor-Made Experience?
+                            </h3>
+                            <p className="text-gray-500 mb-10 max-w-2xl mx-auto text-lg">
+                                We specialize in crafting unique journeys. If you don't see exactly what you're looking for, let us design a custom package just for you.
+                            </p>
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="inline-block bg-primary-600 text-white font-black uppercase tracking-[0.2em] py-5 px-12 hover:bg-secondary-500 hover:text-primary-950 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 rounded-none"
+                            >
+                                Start Planning
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

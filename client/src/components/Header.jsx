@@ -27,6 +27,8 @@ function Header() {
 
   const navLinks = [
     { name: t('packages'), path: '/packages', type: 'link' },
+    { name: 'Experiences', path: '/experiences', type: 'link' },
+    { name: 'Events', path: '/events', type: 'link' },
     { name: 'Gallery', path: '/gallery', type: 'link' },
     { name: t('about'), path: '/about', type: 'link' },
     { name: t('contact'), path: '#contact', type: 'anchor' },
@@ -48,7 +50,7 @@ function Header() {
             <Link to="/" className="flex items-center z-50" onClick={() => setIsMenuOpen(false)}>
               <Logo
                 className="h-16 md:h-20 w-auto transition-all duration-300"
-                color={isDarkState ? '#0044C9' : 'white'}
+                color={isDarkState ? '#003580' : 'white'}
               />
             </Link>
 
@@ -79,7 +81,7 @@ function Header() {
                   <Link
                     key={index}
                     to={link.path}
-                    className={`font-black text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-current ${isDarkState ? 'text-black hover:text-gray-600' : 'text-white hover:text-gray-200'}`}
+                    className={`font-black text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-current ${isDarkState ? 'text-primary-950 hover:text-primary-700' : 'text-white hover:text-secondary-500'}`}
                   >
                     {link.name}
                   </Link>
@@ -87,7 +89,7 @@ function Header() {
                   <a
                     key={index}
                     href={link.path}
-                    className={`font-black text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-current ${isDarkState ? 'text-black hover:text-gray-600' : 'text-white hover:text-gray-200'}`}
+                    className={`font-black text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-current ${isDarkState ? 'text-primary-950 hover:text-primary-700' : 'text-white hover:text-secondary-500'}`}
                   >
                     {link.name}
                   </a>
@@ -100,10 +102,10 @@ function Header() {
 
       {/* Mobile Navigation Overlay - Stark White */}
       <div
-        className={`fixed inset-0 z-40 bg-white transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-center items-center ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+        className={`fixed inset-0 z-40 bg-white transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-start items-center pt-32 ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
       >
-        <div className="flex flex-col space-y-10 text-center p-4">
+        <div className="flex flex-col space-y-8 text-center p-4 overflow-y-auto max-h-full pb-20">
           {navLinks.map((link, index) => (
             link.type === 'link' ? (
               <Link

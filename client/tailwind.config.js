@@ -8,17 +8,30 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9', // Diamond / Sky Blue
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          50: '#f0f6ff',
+          100: '#e0ecff',
+          200: '#cddfff',
+          300: '#a8cafe',
+          400: '#81affc',
+          500: '#2b6aca',
+          600: '#003580', // Booking.com Main Blue
+          700: '#002c6b',
+          800: '#002456',
+          900: '#00193d',
+          950: '#001026',
+        },
+        secondary: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#ffc72c', // SLC Yellow (Main Brand Color)
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+          950: '#451a03',
         },
       },
       animation: {
