@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
+import LanguageSelector from './LanguageSelector';
 
 function Header() {
   const { t } = useTranslation();
@@ -95,6 +96,9 @@ function Header() {
                   </a>
                 )
               ))}
+              <div className="ml-4">
+                <LanguageSelector />
+              </div>
             </nav>
           </div>
         </div>
@@ -127,6 +131,10 @@ function Header() {
               </a>
             )
           ))}
+
+          <div className="pt-4">
+            <LanguageSelector />
+          </div>
 
           <div className="mt-16 pt-16 border-t font-bold border-gray-200 w-48 mx-auto">
             <p className="text-gray-900 text-xs tracking-[0.4em] uppercase">ASK Travels</p>

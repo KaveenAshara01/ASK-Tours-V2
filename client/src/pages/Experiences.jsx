@@ -30,7 +30,7 @@ function Experiences() {
             <Header />
 
             {/* Premium Hero */}
-            <div className="relative h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden bg-gray-900">
+            <div className="relative min-h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden bg-gray-900 pt-32 md:pt-20">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105" style={{ backgroundImage: "url('/images/hero_beach.jpg')" }}></div>
                 <div className="absolute inset-0 bg-black/40"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
@@ -39,10 +39,10 @@ function Experiences() {
                 <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
 
                 <div className="relative z-20 text-center text-white px-4 max-w-[1920px] mx-auto">
-                    <span className="block font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm animate-fade-in text-secondary-500">
+                    <span className="block font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm animate-fade-in text-secondary-500 notranslate">
                         Unforgettable Moments
                     </span>
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
+                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85] mb-8 pb-2 pr-4">
                         Experiences
                     </h1>
                     <div className="w-24 h-1 bg-white/20 mx-auto rounded-full backdrop-blur-sm"></div>

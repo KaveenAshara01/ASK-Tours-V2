@@ -79,7 +79,7 @@ function Home() {
           <div className="bg-cyan-400 py-3 shadow-lg">
             <div className="flex animate-marquee whitespace-nowrap">
               {[...Array(20)].map((_, i) => (
-                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-sm">
+                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-sm notranslate">
                   ASK TRAVELS • DISCOVER SRI LANKA •
                 </span>
               ))}
@@ -92,7 +92,7 @@ function Home() {
           <div className="bg-primary-600 py-3 shadow-xl">
             <div className="flex animate-marquee-reverse whitespace-nowrap">
               {[...Array(20)].map((_, i) => (
-                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-lg">
+                <span key={i} className="mx-4 text-white font-black uppercase tracking-widest text-lg notranslate">
                   ASK TRAVELS • UNFORGETTABLE JOURNEYS •
                 </span>
               ))}

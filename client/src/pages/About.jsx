@@ -15,19 +15,22 @@ function About() {
             <Header />
 
             {/* Editorial Hero */}
-            <div className="relative h-[75vh] bg-gray-900 flex flex-col justify-center items-center overflow-hidden">
+            <div className="relative min-h-[70vh] md:h-[80vh] bg-gray-900 flex flex-col justify-center items-center overflow-hidden pt-32 md:pt-20">
                 <div
                     className="absolute inset-0 bg-[url('/images/safari_hero.jpg')] bg-cover bg-center bg-no-repeat opacity-50"
                     aria-hidden="true"
                 ></div>
                 <div className="absolute inset-0 bg-black/40"></div>
+                {/* Bottom Fade */}
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
+
                 <div className="relative z-10 text-center px-4 pt-20">
                     <span className="block text-white font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm animate-fade-in border-b-2 border-white/50 w-fit mx-auto pb-2">
                         Who We Are
                     </span>
                     <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white mb-4 uppercase tracking-tighter leading-[0.9] flex flex-col items-center">
-                        <span className="block drop-shadow-lg">Ask</span>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white md:ml-32 pr-4">
+                        <span className="block drop-shadow-lg text-white">Ask</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-400 md:ml-32 pr-8 filter drop-shadow-lg leading-tight pb-4">
                             Travels
                         </span>
                     </h1>

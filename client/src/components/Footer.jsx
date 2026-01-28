@@ -30,7 +30,7 @@ function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} ASK Travels. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} <span className="notranslate">ASK Travels</span>. All rights reserved.</p>
         </div>
       </div>
     </footer>

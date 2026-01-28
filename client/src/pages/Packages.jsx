@@ -41,7 +41,7 @@ function Packages() {
             <Header />
 
             {/* Premium Hero Section */}
-            <div className="relative h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden bg-gray-900">
+            <div className="relative min-h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden bg-gray-900 pt-32 md:pt-20">
                 <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
                     style={{ backgroundImage: "url('/images/safari_hero.jpg')" }}
@@ -53,12 +53,12 @@ function Packages() {
                 <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-10"></div>
 
                 <div className="relative z-20 text-center px-6 max-w-[1920px] mx-auto">
-                    <span className="block text-white font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm animate-fade-in">
+                    <span className="block text-white font-bold tracking-[0.4em] uppercase mb-6 text-xs md:text-sm animate-fade-in notranslate">
                         Curated Collections
                     </span>
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8">
+                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8 notranslate">
                         Discover<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-white pr-4 pb-2">
                             Journeys
                         </span>
                     </h1>
