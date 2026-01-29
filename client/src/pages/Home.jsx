@@ -201,6 +201,15 @@ function Home() {
                   </div>
                 </div>
 
+                <div className="text-center md:hidden pb-12">
+                  <Link
+                    to="/packages"
+                    className="inline-block px-8 py-4 bg-gray-900 text-white font-bold uppercase tracking-widest text-xs"
+                  >
+                    View All Collections
+                  </Link>
+                </div>
+
                 {/* --- EXPERIENCES SECTION --- */}
                 {activities.length > 0 && (
                   <div className="mb-16 px-4">
@@ -375,14 +384,7 @@ function Home() {
                   </div>
                 )}
 
-                <div className="text-center md:hidden pb-12">
-                  <Link
-                    to="/packages"
-                    className="inline-block px-8 py-4 bg-gray-900 text-white font-bold uppercase tracking-widest text-xs"
-                  >
-                    View All Collections
-                  </Link>
-                </div>
+
               </>
             )}
           </div>

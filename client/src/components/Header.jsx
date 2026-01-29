@@ -55,25 +55,28 @@ function Header() {
               />
             </Link>
 
-            {/* Mobile Menu Button - Sharp & Clean */}
-            <button
-              className="md:hidden p-2 focus:outline-none z-50 rounded-none transition-colors border-2 border-transparent"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <svg
-                className={`w-8 h-8 ${isDarkState ? 'text-black' : 'text-white'}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Mobile Actions: Flag + Menu Button */}
+            <div className="flex items-center gap-4 md:hidden z-50">
+              <LanguageSelector />
+              <button
+                className="p-2 focus:outline-none rounded-none transition-colors border-2 border-transparent"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
               >
-                {isMenuOpen ? (
-                  <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+                <svg
+                  className={`w-8 h-8 ${isDarkState ? 'text-black' : 'text-white'}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  {isMenuOpen ? (
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
 
             {/* Desktop Navigation - Editorial Style */}
             <nav className="hidden md:flex space-x-12 items-center">
@@ -132,9 +135,7 @@ function Header() {
             )
           ))}
 
-          <div className="pt-4">
-            <LanguageSelector />
-          </div>
+
 
           <div className="mt-16 pt-16 border-t font-bold border-gray-200 w-48 mx-auto">
             <p className="text-gray-900 text-xs tracking-[0.4em] uppercase">ASK Travels</p>

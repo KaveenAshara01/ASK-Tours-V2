@@ -8,6 +8,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-color: #ffc72c #f3f4f6;
+    /* Thumb (secondary-500) Track (gray-100) */
+    scrollbar-width: thin;
+    /* Force thin scrollbar on Firefox */
   }
 
   body {
