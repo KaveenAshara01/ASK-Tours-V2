@@ -23,6 +23,14 @@ const packageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
   }],
+  activities: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Activity'
+  }],
+  events: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event'
+  }],
   videos: {
     type: [String],
     default: []

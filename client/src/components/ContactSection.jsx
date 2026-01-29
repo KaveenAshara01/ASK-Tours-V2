@@ -5,7 +5,7 @@ function ContactSection() {
   const email = "info@ask-travels.com"; // Replace with actual email
 
   return (
-    <section id="contact" className="relative py-12 px-4 overflow-hidden bg-gray-900 border-t border-gray-800">
+    <section id="contact" className="relative py-12 px-4 overflow-hidden bg-gray-900 border-t border-gray-800 scroll-mt-32">
       {/* Changed justify-between to justify-center and tweaked gap to bring them closer */}
       <div className="relative z-10 max-w-[1400px] mx-auto flex flex-col xl:flex-row items-center justify-center gap-12 xl:gap-24">
 

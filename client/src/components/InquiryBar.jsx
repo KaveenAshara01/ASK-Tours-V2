@@ -182,7 +182,7 @@ export default function InquiryBar({ className = '' }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl py-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all text-sm flex items-center justify-center gap-2"
+                            className="w-full bg-primary-600 hover:bg-secondary-500 hover:text-primary-950 text-white font-bold rounded-xl py-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all text-sm flex items-center justify-center gap-2"
                         >
                             <span>{loading ? 'Sending...' : 'Inquire Now'}</span>
                             {!loading && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>}

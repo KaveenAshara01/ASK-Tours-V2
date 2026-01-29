@@ -76,16 +76,28 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [categories, setCategories] = useState([]); // All available categories
   const [selectedCategories, setSelectedCategories] = useState([]); // Selected category IDs
 
+  const [activities, setActivities] = useState([]);
+  const [selectedActivities, setSelectedActivities] = useState([]);
+
+  const [events, setEvents] = useState([]);
+  const [selectedEvents, setSelectedEvents] = useState([]);
+
   useEffect(() => {
-    fetchCategories();
+    fetchMetaData();
   }, []);
 
-  const fetchCategories = async () => {
+  const fetchMetaData = async () => {
     try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data);
+      const [catRes, actRes, evtRes] = await Promise.all([
+        axios.get('/api/categories'),
+        axios.get('/api/activities'),
+        axios.get('/api/events')
+      ]);
+      setCategories(catRes.data);
+      setActivities(actRes.data);
+      setEvents(evtRes.data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error('Error fetching meta data:', error);
     }
   };
 
@@ -101,9 +113,15 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       setStops(pkg.stops || []);
       setExistingImages(pkg.images || []);
       setExistingVideos(pkg.videos || []);
-      // Map category objects to IDs if populated, or use IDs directly
-      const ids = pkg.categories ? pkg.categories.map(c => typeof c === 'object' ? c._id : c) : [];
-      setSelectedCategories(ids);
+
+      const catIds = pkg.categories ? pkg.categories.map(c => typeof c === 'object' ? c._id : c) : [];
+      setSelectedCategories(catIds);
+
+      const actIds = pkg.activities ? pkg.activities.map(a => typeof a === 'object' ? a._id : a) : [];
+      setSelectedActivities(actIds);
+
+      const evtIds = pkg.events ? pkg.events.map(e => typeof e === 'object' ? e._id : e) : [];
+      setSelectedEvents(evtIds);
     }
   }, [pkg]);
 
@@ -269,6 +287,8 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       data.append('days', JSON.stringify(days));
       data.append('stops', JSON.stringify(stops));
       data.append('categories', JSON.stringify(selectedCategories));
+      data.append('activities', JSON.stringify(selectedActivities));
+      data.append('events', JSON.stringify(selectedEvents));
 
       // Append existing media arrays
       data.append('existingImages', JSON.stringify(existingImages));
@@ -478,18 +498,66 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
                   type="checkbox"
                   checked={selectedCategories.includes(cat._id)}
                   onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedCategories([...selectedCategories, cat._id]);
-                    } else {
-                      setSelectedCategories(selectedCategories.filter(id => id !== cat._id));
-                    }
+                    if (e.target.checked) setSelectedCategories([...selectedCategories, cat._id]);
+                    else setSelectedCategories(selectedCategories.filter(id => id !== cat._id));
                   }}
                   className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
                 />
                 <span className="text-gray-700 font-medium">{cat.name}</span>
               </label>
             ))}
-            {categories.length === 0 && <p className="text-sm text-gray-500 col-span-full">No categories available. Please create some in Category Manager first.</p>}
+            {categories.length === 0 && <p className="text-sm text-gray-500 col-span-full">No categories available.</p>}
+          </div>
+        </div>
+
+        {/* Activities Section */}
+        <div className="border-t border-gray-200 pt-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Related Activities (Experiences)
+          </label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {activities.map(act => (
+              <label key={act._id} className="flex items-center space-x-2 bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
+                <input
+                  type="checkbox"
+                  checked={selectedActivities.includes(act._id)}
+                  onChange={(e) => {
+                    if (e.target.checked) setSelectedActivities([...selectedActivities, act._id]);
+                    else setSelectedActivities(selectedActivities.filter(id => id !== act._id));
+                  }}
+                  className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                />
+                <span className="text-gray-700 font-medium">{act.title}</span>
+              </label>
+            ))}
+            {activities.length === 0 && <p className="text-sm text-gray-500 col-span-full">No activities available. Create some in Activity Manager.</p>}
+          </div>
+        </div>
+
+        {/* Events Section */}
+        <div className="border-t border-gray-200 pt-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Related Events
+          </label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {events.map(ev => (
+              <label key={ev._id} className="flex items-center space-x-2 bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
+                <input
+                  type="checkbox"
+                  checked={selectedEvents.includes(ev._id)}
+                  onChange={(e) => {
+                    if (e.target.checked) setSelectedEvents([...selectedEvents, ev._id]);
+                    else setSelectedEvents(selectedEvents.filter(id => id !== ev._id));
+                  }}
+                  className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                />
+                <div>
+                  <span className="block text-gray-700 font-medium">{ev.title}</span>
+                  <span className="block text-xs text-gray-500">{new Date(ev.startDate).toLocaleDateString()}</span>
+                </div>
+              </label>
+            ))}
+            {events.length === 0 && <p className="text-sm text-gray-500 col-span-full">No events available. Create some in Event Manager.</p>}
           </div>
         </div>
 

@@ -66,7 +66,10 @@ router.get('/', async (req, res) => {
 // Get single package (public)
 router.get('/:id', async (req, res) => {
   try {
-    const package = await Package.findById(req.params.id);
+    const package = await Package.findById(req.params.id)
+      .populate('categories')
+      .populate('activities')
+      .populate('events');
     if (!package) {
       return res.status(404).json({ message: 'Package not found' });
     }
@@ -86,6 +89,8 @@ router.post('/', auth, upload.fields([
     const days = req.body.days ? JSON.parse(req.body.days) : [];
     const stops = req.body.stops ? JSON.parse(req.body.stops) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
+    const activities = req.body.activities ? JSON.parse(req.body.activities) : [];
+    const events = req.body.events ? JSON.parse(req.body.events) : [];
 
     const imageFiles = req.files?.images || [];
     const videoFiles = req.files?.videos || [];
@@ -109,7 +114,9 @@ router.post('/', auth, upload.fields([
       featured: featured === 'true',
       days,
       stops,
-      categories
+      categories,
+      activities,
+      events
     });
 
     await package.save();
@@ -134,8 +141,10 @@ router.put('/:id', auth, upload.fields([
     const days = req.body.days ? JSON.parse(req.body.days) : [];
     const stops = req.body.stops ? JSON.parse(req.body.stops) : [];
     const categories = req.body.categories ? JSON.parse(req.body.categories) : [];
-    const package = await Package.findById(req.params.id);
+    const activities = req.body.activities ? JSON.parse(req.body.activities) : [];
+    const events = req.body.events ? JSON.parse(req.body.events) : [];
 
+    const package = await Package.findById(req.params.id);
     if (!package) {
       return res.status(404).json({ message: 'Package not found' });
     }
@@ -173,6 +182,8 @@ router.put('/:id', auth, upload.fields([
     package.days = days || package.days;
     package.stops = stops || package.stops;
     package.categories = categories || package.categories;
+    package.activities = activities || package.activities;
+    package.events = events || package.events;
     package.images = images;
     package.videos = videos;
 
