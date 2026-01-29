@@ -14,12 +14,14 @@ import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
 
 import ScrollToTop from './components/ScrollToTop';
+import TranslationLoader from './components/TranslationLoader';
 import LanguageSuggester from './components/LanguageSuggester';
 
 function App() {
   return (
     <HelmetProvider>
       <Router>
+        <TranslationLoader />
         <LanguageSuggester />
         <ScrollToTop />
         <Routes>

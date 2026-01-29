@@ -14,24 +14,55 @@ function LanguageSelector() {
     const [isOpen, setIsOpen] = useState(false);
     const [suggestion, setSuggestion] = useState(null);
 
-    // Initialize logic: Read cookie OR Detect via IP
+    // Initialize logic: Read LocalStorage (Primary) OR Cookie (Fallback) OR Detect via IP
     useEffect(() => {
-        const getCookie = (name) => {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        };
-
-        const cookieValue = getCookie('googtrans');
-
-        if (cookieValue) {
-            // Cookie exists, use it
-            const langCode = cookieValue.split('/')[2];
-            if (langCode) setCurrentLang(langCode);
+        // 1. Check LocalStorage (Most reliable for UI)
+        const storedLang = localStorage.getItem('userLang');
+        if (storedLang) {
+            setCurrentLang(storedLang);
         } else {
-            // No cookie, try auto-detect
-            detectUserLanguage();
+            // 2. Check Cookie
+            const getCookie = (name) => {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            };
+            const cookieValue = getCookie('googtrans');
+            if (cookieValue) {
+                const langCode = cookieValue.split('/')[2];
+                if (langCode) setCurrentLang(langCode);
+            } else {
+                // 3. Auto-detect
+                detectUserLanguage();
+            }
         }
+
+        // --- SPINNER REMOVAL (MutationObserver) ---
+        // Violently remove Google's loading spinner from the DOM
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) { // Element node
+                        // Check for spinner class or structure
+                        if (node.classList && (
+                            node.classList.contains('goog-te-spinner-pos') ||
+                            node.classList.contains('goog-te-spinner') ||
+                            node.classList.contains('goog-te-banner-frame')
+                        )) {
+                            node.remove(); // Burn it
+                        }
+                        // Also check children if it's a container
+                        const spinners = node.querySelectorAll?.('.goog-te-spinner-pos, .goog-te-spinner');
+                        spinners?.forEach(s => s.remove());
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Cleanup
+        return () => observer.disconnect();
     }, []);
 
     const detectUserLanguage = async () => {
@@ -80,6 +111,9 @@ function LanguageSelector() {
         // Google Translate often looks for "/en/lang"
         document.cookie = `googtrans=/en/${langCode}; path=/; SameSite=Lax`;
         document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}; SameSite=Lax`;
+
+        // Set LocalStorage (Primary UI Store)
+        localStorage.setItem('userLang', langCode);
 
         setCurrentLang(langCode);
         setIsOpen(false);
