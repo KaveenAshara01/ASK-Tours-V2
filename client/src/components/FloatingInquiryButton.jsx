@@ -10,7 +10,7 @@ export default function FloatingInquiryButton() {
         <>
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="fixed bottom-6 right-6 z-50 bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-full shadow-2xl transform transition-all hover:scale-110 active:scale-95 animate-bounce-in md:hidden"
+                className="fixed bottom-6 right-6 z-50 bg-primary-600 hover:bg-secondary-500 hover:text-primary-950 text-white p-4 rounded-full shadow-2xl transform transition-all hover:scale-110 active:scale-95 animate-bounce-in md:hidden"
                 aria-label="Inquire Now"
             >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

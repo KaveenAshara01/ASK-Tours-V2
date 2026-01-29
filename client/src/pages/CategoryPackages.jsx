@@ -4,6 +4,10 @@ import axios from 'axios';
 import PackageCard from '../components/PackageCard';
 import ScrollToTop from '../components/ScrollToTop';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ContactSection from '../components/ContactSection';
+import Modal from '../components/Modal';
+import InquiryForm from '../components/InquiryForm';
 
 function CategoryPackages() {
     const { id } = useParams();
@@ -11,6 +15,7 @@ function CategoryPackages() {
     const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,80 +57,96 @@ function CategoryPackages() {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen font-sans">
+        <div className="bg-white min-h-screen">
             <Header />
 
-
-
-            {/* Header/Hero for Category */}
-            <div className="relative min-h-[60vh] md:min-h-[50vh] flex items-center justify-center overflow-hidden">
+            {/* Editorial Hero Section */}
+            <div className="relative h-[75vh] bg-gray-900 flex flex-col justify-center items-center overflow-hidden">
                 <div
-                    className="absolute inset-0 bg-cover bg-center"
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
                     style={{ backgroundImage: category?.coverImage ? `url('${category.coverImage}')` : "url('/images/hero_beach.jpg')" }}
                 />
-                <div className="absolute inset-0 bg-black/50" />
+                <div className="absolute inset-0 bg-black/40"></div>
 
-                {/* Content Container - Relative to take up space */}
-                <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 pt-44 pb-48 md:pt-36 md:pb-56">
-                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg font-display">
+                <div className="relative z-10 text-center px-4 w-full max-w-[1920px] mx-auto pt-20">
+                    <span className="block text-white font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm animate-fade-in border-b-2 border-white/50 w-fit mx-auto pb-2">
+                        EXPLORE COLLECTION
+                    </span>
+                    <h1 className="text-5xl md:text-7xl lg:text-9xl font-black text-white mb-6 uppercase tracking-tighter leading-[0.9]">
                         {category?.name || 'Category'}
                     </h1>
                     {category?.description && (
                         <div
-                            className="text-lg md:text-xl text-white/90 max-w-2xl leading-relaxed font-light prose prose-invert prose-p:leading-relaxed"
+                            className="text-lg text-white/90 max-w-3xl mx-auto leading-relaxed font-light mt-4"
                             dangerouslySetInnerHTML={{ __html: category.description }}
                         />
                     )}
                 </div>
             </div>
 
-            {/* Main Content with Rounded Top Overlap */}
-            <div className="relative -mt-24 z-20 filter drop-shadow-xl">
-                <div className="relative pt-12 pb-16 px-4 rounded-t-[3rem] min-h-[50vh] overflow-hidden">
+            {/* Main Content */}
+            <section className="relative py-16 px-4 bg-white">
+                <div className="max-w-[1920px] mx-auto z-10 px-4 md:px-8">
 
-                    {/* Background Overlay */}
-                    <div
-                        className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
-                        style={{ backgroundImage: category?.contentImage ? `url('${category.contentImage}')` : (category?.coverImage ? `url('${category.coverImage}')` : "url('/images/hero_beach.jpg')") }}
-                    />
-                    <div className="absolute inset-0 z-0 bg-white/70 backdrop-blur-[2px]"></div>
-
-                    <div className="relative z-10 max-w-7xl mx-auto">
-
-
-
-
-                        {packages.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {packages.map((pkg) => (
-                                    <PackageCard key={pkg._id} package={pkg} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
-                                <h3 className="text-xl font-medium text-gray-900 mb-2">No packages found</h3>
-                                <p className="text-gray-500 mb-6">We don't have any packages in this category yet.</p>
-                                <Link to="/" className="btn-primary">
-                                    Explore other travels
-                                </Link>
-                            </div>
-                        )}
-
-                        {/* Budget Disclaimer (Bottom) */}
-                        <div className="text-center max-w-3xl mx-auto mt-20 mb-8 px-4 border-t border-gray-200 pt-16">
-                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-600 mb-4 ring-4 ring-primary-50">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Flexible & Personalized Travels</h3>
-                            <p className="text-gray-600 leading-relaxed">
-                                We operate across all the budget ranges. accommodations and activities can be fully customized to align with your personal preferences and needs.
-                            </p>
+                    {/* Packages Grid */}
+                    {packages.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+                            {packages.map((pkg, index) => (
+                                <div key={pkg._id} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                                    <PackageCard package={pkg} />
+                                </div>
+                            ))}
                         </div>
+                    ) : (
+                        <div className="text-center py-32">
+                            <h3 className="text-3xl font-black text-gray-900 mb-4 uppercase tracking-tight">Coming Soon</h3>
+                            <p className="text-gray-500 mb-8 font-medium">We are currently curating experiences for this collection.</p>
+                            <Link to="/packages" className="inline-block border-2 border-gray-900 text-gray-900 font-bold uppercase tracking-widest py-3 px-8 hover:bg-gray-900 hover:text-white transition-all duration-300">
+                                View Other Collections
+                            </Link>
+                        </div>
+                    )}
+
+                    {/* Custom Inquiry CTA */}
+                    <div className="mt-12 text-center border-t border-gray-100 pt-16 max-w-5xl mx-auto">
+                        <h3 className="text-2xl md:text-4xl font-black text-black uppercase tracking-tight mb-4">
+                            Customize This Journey
+                        </h3>
+                        <p className="text-gray-600 mb-10 max-w-2xl mx-auto text-lg">
+                            Like this destination but want a different itinerary? We specialize in tailor-made experiences. Tell us your preferences, and we'll craft the perfect {category?.name || 'trip'} for you.
+                        </p>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="inline-block bg-primary-600 text-white font-black uppercase tracking-[0.2em] py-5 px-12 hover:bg-black transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                        >
+                            Inquire for Custom Package
+                        </button>
                     </div>
+
+                    {/* Flexible Budget Note */}
+                    <div className="mt-16 text-center">
+                        <p className="text-sm text-gray-400 uppercase tracking-widest font-bold">
+                            * All accommodations & activities can be adjusted to fit your budget.
+                        </p>
+                    </div>
+
                 </div>
-            </div>
+            </section>
+
+            <ContactSection />
+            <Footer />
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Customize Your Journey"
+                maxWidth="max-w-4xl"
+            >
+                <InquiryForm
+                    initialNote={category ? `I'm interested in a custom package for "${category.name}".` : "I'm interested in a custom package."}
+                    embedded={true}
+                />
+            </Modal>
         </div>
     );
 }

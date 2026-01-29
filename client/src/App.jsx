@@ -8,6 +8,10 @@ import AdminDashboard from './pages/AdminDashboard';
 import PackageDetails from './pages/PackageDetails';
 import CategoryPackages from './pages/CategoryPackages';
 import AdminLogin from './pages/AdminLogin';
+import Experiences from './pages/Experiences';
+import ActivityDetails from './pages/ActivityDetails';
+import Events from './pages/Events';
+import EventDetails from './pages/EventDetails';
 
 import ScrollToTop from './components/ScrollToTop';
 import LanguageSuggester from './components/LanguageSuggester';
@@ -25,6 +29,10 @@ function App() {
           <Route path="/packages" element={<Packages />} />
           <Route path="/package/:id" element={<PackageDetails />} />
           <Route path="/category/:id" element={<CategoryPackages />} />
+          <Route path="/experiences" element={<Experiences />} />
+          <Route path="/experiences/:id" element={<ActivityDetails />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:id" element={<EventDetails />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>

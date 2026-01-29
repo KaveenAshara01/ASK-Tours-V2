@@ -28,14 +28,14 @@ function PackageCard({ package: pkg }) {
           interval={4000}
         />
         {pkg.featured && (
-          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold z-20">
+          <div className="absolute top-4 right-4 bg-secondary-500 text-primary-950 px-3 py-1 rounded-full text-sm font-bold z-20">
             Featured
           </div>
         )}
       </div>
       <div className="p-6 flex flex-col flex-grow">
         <Link to={`/package/${pkg._id}`}>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2 hover:text-primary-600 transition-colors">{pkg.title}</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2 hover:text-primary-700 transition-colors">{pkg.title}</h3>
         </Link>
         <div
           className="text-gray-600 mb-4 line-clamp-3 prose prose-sm max-w-none flex-grow"
@@ -47,7 +47,7 @@ function PackageCard({ package: pkg }) {
           </span>
           <Link
             to={`/package/${pkg._id}`}
-            className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-lg transition-colors font-semibold whitespace-nowrap"
+            className="bg-primary-600 hover:bg-secondary-500 hover:text-primary-950 text-white px-5 py-3 rounded-lg transition-colors font-semibold whitespace-nowrap"
           >
             View Details
           </Link>

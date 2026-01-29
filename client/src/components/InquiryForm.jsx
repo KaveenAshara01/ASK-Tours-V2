@@ -352,7 +352,7 @@ export default function InquiryForm({ initialNote = '', className = '', embedded
                             disabled={loading || status === 'success'}
                             className={`w-full font-bold rounded-xl py-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all text-sm flex items-center justify-center gap-2 ${status === 'success'
                                 ? 'bg-green-500 text-white cursor-default'
-                                : 'bg-primary-600 hover:bg-primary-700 text-white'
+                                : 'bg-primary-600 hover:bg-secondary-500 hover:text-primary-950 text-white'
                                 }`}
                         >
                             {loading ? (

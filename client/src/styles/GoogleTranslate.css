@@ -1,0 +1,87 @@
+/* Completely hide the Google Translate toolbar */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
+.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
+/* Fix body shifting and Mobile Scroll */
+body {
+    top: 0 !important;
+    position: relative !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+}
+
+/* Ensure font tags don't break layout */
+font {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+}
+
+/* Hide the widget element */
+#google_translate_element {
+    display: none !important;
+}
+
+/* Hide tooltips and hover effects */
+.goog-tooltip,
+.goog-tooltip:hover {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Hide the tooltip frame specifically */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+font {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Hide the iframe that pushes content down */
+iframe.skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+/* Ensure no top margin on html/body */
+html,
+body {
+    margin-top: 0 !important;
+}
+
+/* Notranslate utility */
+.notranslate {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
