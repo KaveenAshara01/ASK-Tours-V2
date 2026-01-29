@@ -85,3 +85,12 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+/* Hide Google Translate Spinner/Progress */
+.goog-te-spinner-pos,
+.goog-te-spinner,
+.goog-te-spinner-animation,
+.goog-te-gadget-simple .goog-te-gadget-icon {
+    display: none !important;
+    visibility: hidden !important;
+}

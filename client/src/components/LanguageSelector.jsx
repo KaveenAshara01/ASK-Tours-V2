@@ -68,8 +68,19 @@ function LanguageSelector() {
     };
 
     const changeLanguage = (langCode) => {
-        document.cookie = `googtrans=/en/${langCode}; path=/;`;
-        document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname}`;
+        const domain = window.location.hostname;
+
+        // Clear potential duplicate cookies to ensure we set the authoritative one
+        document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        document.cookie = `googtrans=; path=/; domain=${domain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        document.cookie = `googtrans=; path=/; domain=.${domain}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+
+        // Set the new cookie
+        // We set it on the root path and current domain.
+        // Google Translate often looks for "/en/lang"
+        document.cookie = `googtrans=/en/${langCode}; path=/; SameSite=Lax`;
+        document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}; SameSite=Lax`;
+
         setCurrentLang(langCode);
         setIsOpen(false);
         setSuggestion(null);
