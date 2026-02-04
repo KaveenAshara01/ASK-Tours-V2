@@ -24,20 +24,22 @@ function App() {
         <TranslationLoader />
         <LanguageSuggester />
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/package/:id" element={<PackageDetails />} />
-          <Route path="/category/:id" element={<CategoryPackages />} />
-          <Route path="/experiences" element={<Experiences />} />
-          <Route path="/experiences/:id" element={<ActivityDetails />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Routes>
+        <div className="overflow-x-hidden">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/packages" element={<Packages />} />
+            <Route path="/package/:id" element={<PackageDetails />} />
+            <Route path="/category/:id" element={<CategoryPackages />} />
+            <Route path="/experiences" element={<Experiences />} />
+            <Route path="/experiences/:id" element={<ActivityDetails />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Routes>
+        </div>
       </Router>
     </HelmetProvider>
   );

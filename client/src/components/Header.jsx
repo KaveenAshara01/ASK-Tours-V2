@@ -18,13 +18,18 @@ function Header() {
   }, []);
 
   // Prevent scrolling when menu is open
-  if (typeof document !== 'undefined') {
+  useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
-  }
+
+    // Cleanup function to ensure scroll is restored when component unmounts
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   const navLinks = [
     { name: t('packages'), path: '/packages', type: 'link' },
