@@ -25,7 +25,7 @@ function Footer() {
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
               <li>Email: info@ask-travels.com</li>
-              <li>WhatsApp: +1 234 567 890</li>
+              <li>WhatsApp: +94 70 1 422 322</li>
             </ul>
           </div>
         </div>

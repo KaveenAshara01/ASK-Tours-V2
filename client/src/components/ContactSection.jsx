@@ -1,8 +1,8 @@
 import InquiryForm from './InquiryForm';
 
 function ContactSection() {
-  const whatsappNumber = "1234567890"; // Replace with actual WhatsApp number
-  const email = "info@ask-travels.com"; // Replace with actual email
+  const whatsappNumber = "94701422322";
+  const email = "info@ask-travels.com";
 
   return (
     <section id="contact" className="relative py-12 px-4 overflow-hidden bg-gray-900 border-t border-gray-800 scroll-mt-32">
