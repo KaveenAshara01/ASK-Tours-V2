@@ -5,12 +5,24 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 
 function Gallery() {
+
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isZoomed, setIsZoomed] = useState(false);
 
     useEffect(() => {
         fetchImages();
     }, []);
+
+    useEffect(() => {
+        if (selectedImage) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+            setIsZoomed(false);
+        }
+    }, [selectedImage]);
 
     const fetchImages = async () => {
         try {
@@ -21,6 +33,20 @@ function Gallery() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleImageClick = (img) => {
+        setSelectedImage(img);
+    };
+
+    const closeModal = () => {
+        setSelectedImage(null);
+        setIsZoomed(false);
+    };
+
+    const toggleZoom = (e) => {
+        e.stopPropagation();
+        setIsZoomed(!isZoomed);
     };
 
     return (
@@ -57,7 +83,11 @@ function Gallery() {
                 ) : (
                     <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
                         {images.map((img) => (
-                            <div key={img._id} className="break-inside-avoid relative group overflow-hidden bg-gray-100 border border-gray-100">
+                            <div
+                                key={img._id}
+                                className="break-inside-avoid relative group overflow-hidden bg-gray-100 border border-gray-100 cursor-pointer"
+                                onClick={() => handleImageClick(img)}
+                            >
                                 <img
                                     src={img.url}
                                     alt={img.title || 'Gallery Image'}
@@ -87,6 +117,43 @@ function Gallery() {
             </div>
 
             <Footer />
+
+            {/* Lightbox / Zoom Modal */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-md transition-all duration-300"
+                    onClick={closeModal}
+                >
+                    <button
+                        className="absolute top-6 right-6 text-white/50 hover:text-white z-[70] p-2 transition-colors"
+                        onClick={closeModal}
+                    >
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <div
+                        className={`relative transition-transform duration-500 ease-out p-4 ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+                        onClick={toggleZoom}
+                    >
+                        <img
+                            src={selectedImage.url}
+                            alt={selectedImage.title || 'Full View'}
+                            className={`max-w-full max-h-[90vh] object-contain shadow-2xl transition-transform duration-500 ${isZoomed ? 'scale-150' : 'scale-100'}`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                toggleZoom(e);
+                            }}
+                        />
+                        {selectedImage.title && !isZoomed && (
+                            <div className="absolute bottom-[-3rem] left-0 right-0 text-center text-white/80 font-medium tracking-wide">
+                                {selectedImage.title}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
