@@ -82,24 +82,7 @@ function ActivityDetails() {
                         </div>
                     </div>
 
-                    {/* Instagram-style Gallery Grid */}
-                    {activity.images.length > 1 && (
-                        <div className="mt-8" id="gallery-section">
-                            <h3 className="text-2xl font-black text-black uppercase tracking-tight mb-6">Gallery</h3>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
-                                {activity.images.map((img, i) => (
-                                    <div key={i} className="group relative overflow-hidden aspect-square cursor-pointer">
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
-                                        <img
-                                            src={img}
-                                            alt={`${activity.title} ${i}`}
-                                            className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+
                 </div>
 
                 {/* Sidebar - Sticky Card */}
@@ -121,6 +104,27 @@ function ActivityDetails() {
                     </div>
                 </div>
             </div>
+
+            {/* Full Width Gallery Strip */}
+            {activity.images.length > 1 && (
+                <div id="gallery-section" className="w-full bg-white">
+                    <div className="text-center py-12">
+                        <h2 className="text-4xl font-black text-black uppercase tracking-tighter">Gallery</h2>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-1">
+                        {activity.images.map((img, i) => (
+                            <div key={i} className="group relative overflow-hidden aspect-square cursor-pointer">
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
+                                <img
+                                    src={img}
+                                    alt={`${activity.title} ${i}`}
+                                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* Related Packages */}
             {relatedPackages.length > 0 && (
