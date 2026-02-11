@@ -95,16 +95,7 @@ function Gallery() {
                                     loading="lazy"
                                 />
                                 {/* Technical Overlay */}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                    <div className="border border-white/50 p-6 transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                                        <span className="text-white font-bold uppercase tracking-[0.4em] text-xs block text-center mb-2">
-                                            View
-                                        </span>
-                                        <h3 className="text-white font-black text-2xl uppercase tracking-tighter text-center">
-                                            Moment
-                                        </h3>
-                                    </div>
-                                </div>
+
                             </div>
                         ))}
                         {images.length === 0 && (

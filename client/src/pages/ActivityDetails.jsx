@@ -71,7 +71,7 @@ function ActivityDetails() {
                 </div>
             </div>
 
-            <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <div className="max-w-[1920px] mx-auto px-4 md:px-12 pt-16 md:pt-24 pb-12 grid grid-cols-1 lg:grid-cols-12 gap-16">
                 {/* Content Side */}
                 <div className="lg:col-span-8">
                     <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden mb-12">
@@ -86,18 +86,18 @@ function ActivityDetails() {
                 </div>
 
                 {/* Sidebar - Sticky Card */}
-                <div className="lg:col-span-4 space-y-8 h-fit lg:sticky lg:top-32">
-                    <div className="bg-white p-8 md:p-10 shadow-2xl border border-gray-100 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary-50 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
+                <div className="lg:col-span-4 space-y-6 h-fit lg:sticky lg:top-32">
+                    <div className="bg-white p-5 md:p-6 shadow-2xl border border-gray-100 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-primary-50 rounded-bl-full -mr-12 -mt-12 transition-transform group-hover:scale-110"></div>
 
-                        <h3 className="text-2xl font-black text-black uppercase tracking-tight mb-6 relative z-10">Experience This</h3>
-                        <p className="text-gray-500 mb-8 font-medium relative z-10">
+                        <h3 className="text-xl font-black text-black uppercase tracking-tight mb-3 relative z-10">Experience This</h3>
+                        <p className="text-gray-500 mb-5 font-medium text-sm relative z-10">
                             Add this activity to your custom itinerary. We customize every detail to your preference.
                         </p>
 
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="w-full block bg-primary-600 text-white font-bold uppercase tracking-[0.2em] py-5 hover:bg-secondary-500 hover:text-primary-950 transition-all duration-300 shadow-xl hover:shadow-2xl relative z-10"
+                            className="w-full block bg-primary-600 text-white font-bold uppercase tracking-[0.2em] py-3 hover:bg-secondary-500 hover:text-primary-950 transition-all duration-300 shadow-xl hover:shadow-2xl relative z-10"
                         >
                             Book Experience
                         </button>
@@ -108,10 +108,10 @@ function ActivityDetails() {
             {/* Full Width Gallery Strip */}
             {activity.images.length > 1 && (
                 <div id="gallery-section" className="w-full bg-white">
-                    <div className="text-center py-12">
+                    <div className="text-center pt-8 pb-6">
                         <h2 className="text-4xl font-black text-black uppercase tracking-tighter">Gallery</h2>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-1">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
                         {activity.images.map((img, i) => (
                             <div key={i} className="group relative overflow-hidden aspect-square cursor-pointer">
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10"></div>
