@@ -10,10 +10,13 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    params: {
-        folder: 'ask-tours',
-        allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4', 'webm', 'ogg'],
-        resource_type: 'auto', // Auto-detect for videos/images
+    params: async (req, file) => {
+        const isVideo = file.mimetype.startsWith('video/');
+        return {
+            folder: 'ask-tours',
+            resource_type: isVideo ? 'video' : 'image',
+            format: isVideo ? undefined : 'webp'
+        };
     },
 });
 
